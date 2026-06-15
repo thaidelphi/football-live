@@ -72,7 +72,6 @@ import z4.v;
 /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
 public class EP extends AppCompatActivity {
     TextView A;
-    MaxInterstitialAd C;
     String D;
     WebView E;
 
@@ -176,41 +175,7 @@ public class EP extends AppCompatActivity {
         }
     }
 
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    class b implements MaxAdListener {
-        b() {
-        }
 
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdClicked(MaxAd maxAd) {
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdDisplayFailed(MaxAd maxAd, MaxError maxError) {
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdDisplayed(MaxAd maxAd) {
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdHidden(MaxAd maxAd) {
-            EP.this.B = false;
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdLoadFailed(String str, MaxError maxError) {
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdLoaded(MaxAd maxAd) {
-            if (EP.this.C.isReady()) {
-                EP ep = EP.this;
-                ep.B = true;
-                ep.C.showAd();
-            }
-        }
-    }
 
     /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
     class c implements p2.d {

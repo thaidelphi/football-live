@@ -72,12 +72,6 @@ import z4.l0;
 public class Home extends AppCompatActivity {
     public static int A;
 
-    /* renamed from: y  reason: collision with root package name */
-    public static Interstitial f10166y;
-
-    /* renamed from: z  reason: collision with root package name */
-    public static MaxInterstitialAd f10167z;
-
     /* renamed from: b  reason: collision with root package name */
     RecyclerView f10169b;
 
@@ -132,11 +126,7 @@ public class Home extends AppCompatActivity {
     /* renamed from: u  reason: collision with root package name */
     FrameLayout f10188u;
 
-    /* renamed from: v  reason: collision with root package name */
-    StartAppAd f10189v;
 
-    /* renamed from: x  reason: collision with root package name */
-    ApplovinAppOpenManager f10191x;
 
     /* renamed from: a  reason: collision with root package name */
     ArrayList<p1.a> f10168a = new ArrayList<>();
@@ -562,192 +552,7 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    /* JADX INFO: Access modifiers changed from: package-private */
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    public class f implements OnAdLoaded {
-        f() {
-        }
-
-        @Override // com.appnext.core.callbacks.OnAdLoaded
-        public void adLoaded(String str, AppnextAdCreativeType appnextAdCreativeType) {
-        }
-    }
-
-    /* JADX INFO: Access modifiers changed from: package-private */
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    public class g implements OnAdOpened {
-        g() {
-        }
-
-        @Override // com.appnext.core.callbacks.OnAdOpened
-        public void adOpened() {
-        }
-    }
-
-    /* JADX INFO: Access modifiers changed from: package-private */
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    public class h implements OnAdClicked {
-        h() {
-        }
-
-        @Override // com.appnext.core.callbacks.OnAdClicked
-        public void adClicked() {
-        }
-    }
-
-    /* JADX INFO: Access modifiers changed from: package-private */
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    public class i implements OnAdClosed {
-        i() {
-        }
-
-        @Override // com.appnext.core.callbacks.OnAdClosed
-        public void onAdClosed() {
-            Home.f10166y.loadAd();
-        }
-    }
-
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    class j implements AppLovinSdk.SdkInitializationListener {
-        j() {
-        }
-
-        @Override // com.applovin.sdk.AppLovinSdk.SdkInitializationListener
-        public void onSdkInitialized(AppLovinSdkConfiguration appLovinSdkConfiguration) {
-            if (Home.this.f10177j.getString("applovin_app_open", "").equals("0")) {
-                return;
-            }
-            Home home = Home.this;
-            home.f10191x = new ApplovinAppOpenManager(home.getApplicationContext());
-        }
-    }
-
-    /* JADX INFO: Access modifiers changed from: package-private */
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    public class k implements OnAdError {
-        k() {
-        }
-
-        @Override // com.appnext.core.callbacks.OnAdError
-        public void adError(String str) {
-            Log.d(Home.this.f10180m, str);
-        }
-    }
-
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    class l implements InitializationListener {
-        l() {
-        }
-
-        @Override // com.ironsource.mediationsdk.sdk.InitializationListener
-        public void onInitializationComplete() {
-        }
-    }
-
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    class m implements View.OnClickListener {
-        m() {
-        }
-
-        @Override // android.view.View.OnClickListener
-        public void onClick(View view) {
-            Home.this.startActivity(new Intent("android.intent.action.VIEW", Uri.parse(Home.this.f10177j.getString("update_link", ""))));
-        }
-    }
-
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    class n implements View.OnClickListener {
-        n() {
-        }
-
-        @Override // android.view.View.OnClickListener
-        public void onClick(View view) {
-            Home.this.f10176i.setVisibility(8);
-        }
-    }
-
-    /* JADX INFO: Access modifiers changed from: package-private */
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    public class o implements LevelPlayInterstitialListener {
-        o() {
-        }
-
-        @Override // com.ironsource.mediationsdk.sdk.LevelPlayInterstitialListener
-        public void onAdClicked(AdInfo adInfo) {
-        }
-
-        @Override // com.ironsource.mediationsdk.sdk.LevelPlayInterstitialListener
-        public void onAdClosed(AdInfo adInfo) {
-            IronSource.loadInterstitial();
-        }
-
-        @Override // com.ironsource.mediationsdk.sdk.LevelPlayInterstitialListener
-        public void onAdLoadFailed(IronSourceError ironSourceError) {
-        }
-
-        @Override // com.ironsource.mediationsdk.sdk.LevelPlayInterstitialListener
-        public void onAdOpened(AdInfo adInfo) {
-        }
-
-        @Override // com.ironsource.mediationsdk.sdk.LevelPlayInterstitialListener
-        public void onAdReady(AdInfo adInfo) {
-        }
-
-        @Override // com.ironsource.mediationsdk.sdk.LevelPlayInterstitialListener
-        public void onAdShowFailed(IronSourceError ironSourceError, AdInfo adInfo) {
-        }
-
-        @Override // com.ironsource.mediationsdk.sdk.LevelPlayInterstitialListener
-        public void onAdShowSucceeded(AdInfo adInfo) {
-        }
-    }
-
-    /* JADX INFO: Access modifiers changed from: package-private */
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    public class p implements MaxAdListener {
-        p() {
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdClicked(MaxAd maxAd) {
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdDisplayFailed(MaxAd maxAd, MaxError maxError) {
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdDisplayed(MaxAd maxAd) {
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdHidden(MaxAd maxAd) {
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdLoadFailed(String str, MaxError maxError) {
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdLoaded(MaxAd maxAd) {
-            Home.A = 0;
-        }
-    }
-
-    /* JADX INFO: Access modifiers changed from: package-private */
-    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
-    public class q implements MaxAdViewAdListener {
-
-        /* renamed from: a  reason: collision with root package name */
-        final /* synthetic */ MaxAdView f10211a;
-
-        q(MaxAdView maxAdView) {
-            this.f10211a = maxAdView;
-        }
-
-        @Override // com.applovin.mediation.MaxAdListener
-        public void onAdClicked(MaxAd maxAd) {
-        }
+    // Unused ad listener classes removed
 
         @Override // com.applovin.mediation.MaxAdViewAdListener
         public void onAdCollapsed(MaxAd maxAd) {

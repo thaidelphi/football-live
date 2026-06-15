@@ -7,3 +7,4 @@
 - **อัปเดตไฟล์ `prompt.md`**: บันทึกคำสั่ง "update rules.md" พร้อมเสริมเกร็ดความรู้ภาษาอังกฤษตามกฎ (English Language Coaching)
 - **นำระบบโฆษณาออก (Ad Removal)**: ลบคำสั่งเริ่มต้นโฆษณา, แบนเนอร์, และโฆษณาแทรก (Interstitial) ออกจากไฟล์ `MyApplication.java`, `Home.java`, `DA.java`, และ `EP.java` โดยทำการแก้ไขเพื่อให้สามารถเข้าดูวิดีโอได้ทันทีโดยไม่ต้องรอโฆษณา
 - **ซิงค์ Git**: ทำการ add, commit และ push การแก้ไขขึ้น Github ตามกฎเหล็ก
+- **ลบระบบโฆษณาออกทั้งหมด (Bypass all ads)**: ดำเนินการลบ Class และ Listener ที่เกี่ยวข้องกับระบบโฆษณาทั้งหมดที่เหลืออยู่ในโปรเจ็กต์ (เช่น `ApplovinAppOpenManager`, `LevelPlayInterstitialListener`, `MaxAdListener` ฯลฯ) จากไฟล์ `Home.java`, `EP.java`, `DA.java` เพื่อให้มั่นใจว่าไม่มีโค้ดโฆษณาที่ตกค้างและโปรเจ็กต์สะอาดอย่างสมบูรณ์
