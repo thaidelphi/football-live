@@ -1,0 +1,9 @@
+package com.google.android.gms.common.api.internal;
+/* compiled from: com.google.android.gms:play-services-base@@18.0.1 */
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+final class o0 extends ThreadLocal<Boolean> {
+    @Override // java.lang.ThreadLocal
+    protected final /* synthetic */ Boolean initialValue() {
+        return Boolean.FALSE;
+    }
+}

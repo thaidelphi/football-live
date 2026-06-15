@@ -1,0 +1,11 @@
+package com.google.android.material.internal;
+
+import android.os.Build;
+import java.util.Locale;
+/* compiled from: ManufacturerUtils.java */
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes2.dex */
+public class g {
+    public static boolean a() {
+        return Build.MANUFACTURER.toLowerCase(Locale.ENGLISH).equals("meizu");
+    }
+}

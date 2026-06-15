@@ -1,0 +1,455 @@
+package com.appnext.actionssdk;
+
+import android.annotation.SuppressLint;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
+import com.appnext.actionssdk.callback.OnActionError;
+import com.appnext.actionssdk.callback.OnActionsLoaded;
+import com.appnext.core.webview.AppnextWebView;
+import com.ironsource.fe;
+import com.ironsource.m5;
+import com.ironsource.ug;
+import com.unity3d.services.ads.gmascar.utils.ScarConstants;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+public class ActionsServiceActivity extends ActionActivity {
+    private String bi;
+    private String bn;
+    private String bo;
+    private String bp;
+    private WebView webView;
+    private String template = "";
+    private String H = "";
+    private boolean bq = false;
+    private boolean br = false;
+    private boolean bs = true;
+
+    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+    private class a {
+        public a() {
+        }
+
+        @JavascriptInterface
+        public final void actionImpression(String str) {
+            ActionsServiceActivity.this.a((AdData) com.appnext.actionssdk.a.j().parseAd(str));
+        }
+
+        @JavascriptInterface
+        public final void actionPostView(String str) {
+            ActionsServiceActivity.this.b((AdData) com.appnext.actionssdk.a.j().parseAd(str));
+        }
+
+        @JavascriptInterface
+        public final void adClicked(final String str, final int i10) {
+            ActionsServiceActivity.this.runOnUiThread(new Runnable() { // from class: com.appnext.actionssdk.ActionsServiceActivity.a.1
+                @Override // java.lang.Runnable
+                public final void run() {
+                    try {
+                        ActionsServiceActivity.c(ActionsServiceActivity.this, false);
+                        ActionsServiceActivity.this.a((AdData) com.appnext.actionssdk.a.j().parseAd(str), i10);
+                    } catch (Throwable unused) {
+                    }
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public final void error(String str) {
+            ActionsServiceActivity.this.finish();
+        }
+
+        @JavascriptInterface
+        public final String getActionsData() {
+            String[] split;
+            try {
+                JSONArray jSONArray = new JSONArray();
+                ActionsServiceActivity actionsServiceActivity = ActionsServiceActivity.this;
+                ActionAd actionAd = new ActionAd(actionsServiceActivity, actionsServiceActivity.bi);
+                actionAd.setLang(ActionsServiceActivity.this.H);
+                for (String str : ActionsServiceActivity.this.bn.split(",")) {
+                    actionAd.setCategories(str);
+                    ArrayList<AdData> sortedAds = actionAd.getSortedAds();
+                    if (sortedAds != null) {
+                        JSONObject jSONObject = new JSONObject();
+                        jSONObject.put("action", str);
+                        JSONArray jSONArray2 = new JSONArray();
+                        Iterator<AdData> it = sortedAds.iterator();
+                        while (it.hasNext()) {
+                            AdData next = it.next();
+                            JSONObject jSONObject2 = new JSONObject(next.a(ActionsServiceActivity.this));
+                            jSONObject2.put("gdpr", next.isGdpr() && Boolean.parseBoolean(f.y().get("gdpr")));
+                            jSONArray2.put(jSONObject2);
+                        }
+                        jSONObject.put("apps", jSONArray2);
+                        jSONArray.put(jSONObject);
+                    }
+                }
+                actionAd.destroy();
+                jSONArray.toString().replace("\\", "");
+                return jSONArray.toString();
+            } catch (JSONException e8) {
+                e8.printStackTrace();
+                return "";
+            }
+        }
+
+        @JavascriptInterface
+        public final void jsError(String str) {
+        }
+
+        @JavascriptInterface
+        public final void onScrollEvent() {
+            try {
+                c.a(ActionsServiceActivity.this, "template-displayed", new JSONObject(ActionsServiceActivity.this.template).put("is_scrolled", "1").toString());
+                if (ActionSDK.aT.getOnAdOpenedCallback() != null) {
+                    ActionSDK.aT.getOnAdOpenedCallback().adOpened();
+                }
+            } catch (Throwable unused) {
+            }
+        }
+
+        @JavascriptInterface
+        public final void redirect(String str) {
+            ActionsServiceActivity.c(ActionsServiceActivity.this, false);
+            ActionsServiceActivity.this.openLink(str);
+        }
+
+        @JavascriptInterface
+        public final void selectedApps(String str) {
+            JSONArray jSONArray;
+            Object obj;
+            try {
+                JSONArray jSONArray2 = new JSONArray(str);
+                Object obj2 = "";
+                ArrayList arrayList = new ArrayList();
+                for (int i10 = 0; i10 < jSONArray2.length(); i10++) {
+                    if (arrayList.size() == 0) {
+                        arrayList.add(jSONArray2.getJSONObject(i10).getString("action"));
+                        obj2 = jSONArray2.getJSONObject(i10).getString("acid");
+                    } else if (!jSONArray2.getJSONObject(i10).getString("action").equals(arrayList.get(arrayList.size() - 1))) {
+                        arrayList.add(jSONArray2.getJSONObject(i10).getString("action"));
+                    }
+                }
+                JSONArray jSONArray3 = new JSONArray();
+                int i11 = 0;
+                int i12 = 0;
+                while (i11 < arrayList.size()) {
+                    JSONObject jSONObject = new JSONObject();
+                    Object obj3 = (String) arrayList.get(i11);
+                    jSONObject.put("action", obj3);
+                    jSONObject.put("parent_acid", obj2);
+                    JSONArray jSONArray4 = new JSONArray();
+                    int i13 = 0;
+                    while (i13 < jSONArray2.length()) {
+                        AdData adData = (AdData) com.appnext.core.l.a(AdData.class, jSONArray2.getJSONObject(i13));
+                        if (adData == null || !adData.getAction().equals(obj3)) {
+                            jSONArray = jSONArray2;
+                            obj = obj2;
+                        } else {
+                            jSONObject.put("acid", adData.I());
+                            JSONObject jSONObject2 = new JSONObject();
+                            jSONArray = jSONArray2;
+                            jSONObject2.put("type", adData.getType());
+                            obj = obj2;
+                            jSONObject2.put("is_installed", com.appnext.core.f.i(ActionsServiceActivity.this, adData.C()) ? 1 : 0);
+                            jSONObject2.put(m5.f18418u, i12);
+                            jSONObject2.put("package", adData.C());
+                            jSONObject2.put("banner_id", adData.J());
+                            jSONArray4.put(jSONObject2);
+                            i12++;
+                        }
+                        i13++;
+                        jSONArray2 = jSONArray;
+                        obj2 = obj;
+                    }
+                    jSONObject.put("packages", jSONArray4);
+                    jSONObject.put("banner_type", ActionsServiceActivity.this.getIntent().getExtras().getString("size"));
+                    jSONObject.put("event", "tab_opened");
+                    jSONArray3.put(jSONObject);
+                    i11++;
+                    jSONArray2 = jSONArray2;
+                    obj2 = obj2;
+                }
+                ActionsServiceActivity.this.template = new JSONObject().put("arr", jSONArray3).put("is_scrolled", "0").toString();
+                ActionsServiceActivity actionsServiceActivity = ActionsServiceActivity.this;
+                c.a(actionsServiceActivity, "template-displayed", actionsServiceActivity.template);
+                if (ActionSDK.aT.getOnAdOpenedCallback() != null) {
+                    ActionSDK.aT.getOnAdOpenedCallback().adOpened();
+                }
+            } catch (Throwable unused) {
+            }
+        }
+
+        @JavascriptInterface
+        public final void tabClicked(String str, int i10) {
+            try {
+                ActionsServiceActivity actionsServiceActivity = ActionsServiceActivity.this;
+                ActionAd actionAd = new ActionAd(actionsServiceActivity, actionsServiceActivity.bi);
+                actionAd.setCategories(str);
+                actionAd.setLang(ActionsServiceActivity.this.H);
+                ArrayList<AdData> sortedAds = actionAd.getSortedAds();
+                actionAd.destroy();
+                JSONObject jSONObject = new JSONObject();
+                jSONObject.put("action", str);
+                jSONObject.put("acid", sortedAds.get(0).I() == null ? "" : sortedAds.get(0).I());
+                JSONArray jSONArray = new JSONArray();
+                Iterator<AdData> it = sortedAds.iterator();
+                int i11 = 0;
+                while (it.hasNext()) {
+                    AdData next = it.next();
+                    if (i11 != 5) {
+                        JSONObject jSONObject2 = new JSONObject();
+                        jSONObject2.put("type", next.getType());
+                        jSONObject2.put("is_installed", com.appnext.core.f.i(ActionsServiceActivity.this, next.C()) ? 1 : 0);
+                        jSONObject2.put(m5.f18418u, i11);
+                        jSONObject2.put("package", next.C());
+                        jSONObject2.put("banner_id", next.J());
+                        jSONArray.put(jSONObject2);
+                        i11++;
+                    }
+                }
+                jSONObject.put("packages", jSONArray);
+                jSONObject.put("banner_type", ActionsServiceActivity.this.getIntent().getExtras().getString("size"));
+                jSONObject.put("event", "tab_changed");
+                jSONObject.put("tab_id", i10);
+                c.a(ActionsServiceActivity.this, "template-displayed", jSONObject.toString());
+                if (ActionSDK.aT.getOnAdOpenedCallback() != null) {
+                    ActionSDK.aT.getOnAdOpenedCallback().adOpened();
+                }
+            } catch (Throwable unused) {
+            }
+        }
+    }
+
+    private void loadJS(String str) {
+        if (this.webView != null) {
+            this.webView.loadUrl(str);
+        }
+    }
+
+    private void loadWebview(String str, String str2) {
+        try {
+            URL url = new URL(str);
+            this.webView.loadDataWithBaseURL(url.getProtocol() + "://" + url.getHost(), "<html><body><script>" + str2 + "</script></body></html>", null, "UTF-8", null);
+        } catch (Throwable unused) {
+        }
+    }
+
+    private void pageFinished() {
+        if (this.bq && this.br) {
+            JSONObject jSONObject = new JSONObject();
+            jSONObject.put("vid", "2.4.6.472");
+            jSONObject.put(ScarConstants.TOKEN_ID_KEY, "");
+            jSONObject.put("auid", "");
+            jSONObject.put(ug.f21009x, this.bi);
+            jSONObject.put("osid", "100");
+            jSONObject.put(fe.f17443q, this.H.equals("") ? com.appnext.base.b.f.cg() : this.H);
+            loadJS("javascript:(function() { try { Appnext.setParams(" + jSONObject.toString() + "); } catch(err){ Appnext.jsError(err.message); }})()");
+            loadJS("javascript:(function() { try { Appnext.load('" + this.bo + "'); } catch(err){ Appnext.jsError(err.message); }})()");
+        }
+    }
+
+    @Override // com.appnext.actionssdk.ActionActivity, android.app.Activity
+    @SuppressLint({"SetJavaScriptEnabled"})
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        try {
+            setRequestedOrientation(7);
+        } catch (Throwable unused) {
+        }
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            new Thread(new Runnable() { // from class: com.appnext.actionssdk.ActionsServiceActivity.1
+                @Override // java.lang.Runnable
+                public final void run() {
+                    if (com.appnext.core.f.z(ActionsServiceActivity.this)) {
+                        return;
+                    }
+                    ActionsServiceActivity.this.finish();
+                }
+            }).start();
+            this.bn = getIntent().getExtras().getString("actions");
+            this.bo = getIntent().getExtras().getString("selected");
+            this.bi = getIntent().getExtras().getString("placement");
+            this.bp = getIntent().getExtras().getString("jsURL");
+            this.H = getIntent().getExtras().getString(fe.f17443q);
+            boolean z10 = !getIntent().getExtras().getBoolean("isExpired", false);
+            this.br = z10;
+            if (!z10) {
+                final ActionSDK actionSDK = new ActionSDK(this, this.bi);
+                actionSDK.setLanguage(this.H);
+                actionSDK.setOnActionErrorCallback(new OnActionError() { // from class: com.appnext.actionssdk.ActionsServiceActivity.2
+                    @Override // com.appnext.actionssdk.callback.OnActionError
+                    public final void actionError(String str, String str2) {
+                        actionSDK.onDestroy();
+                        ActionsServiceActivity.this.finish();
+                    }
+                });
+                actionSDK.loadActions(new OnActionsLoaded() { // from class: com.appnext.actionssdk.ActionsServiceActivity.3
+                    @Override // com.appnext.actionssdk.callback.OnActionsLoaded
+                    public final void onActionsLoaded(ArrayList<ActionData> arrayList) {
+                        actionSDK.onDestroy();
+                        ActionsServiceActivity.a(ActionsServiceActivity.this, true);
+                        ActionsServiceActivity.a(ActionsServiceActivity.this);
+                    }
+                }, this.bn.split(","));
+            }
+            LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+            linearLayout.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
+            setContentView(linearLayout);
+            WebView webView = new WebView(this);
+            this.webView = webView;
+            webView.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
+            linearLayout.addView(this.webView);
+            this.webView.getSettings().setTextZoom(100);
+            this.webView.getSettings().setJavaScriptEnabled(true);
+            this.webView.getSettings().setAppCacheEnabled(true);
+            this.webView.getSettings().setDomStorageEnabled(true);
+            this.webView.getSettings().setDatabaseEnabled(true);
+            int i10 = Build.VERSION.SDK_INT;
+            if (i10 >= 21) {
+                this.webView.getSettings().setMixedContentMode(0);
+            }
+            if (i10 >= 17) {
+                this.webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
+            }
+            this.webView.setWebChromeClient(new WebChromeClient() { // from class: com.appnext.actionssdk.ActionsServiceActivity.4
+                @Override // android.webkit.WebChromeClient
+                public final boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                    consoleMessage.messageLevel().name();
+                    consoleMessage.lineNumber();
+                    consoleMessage.message();
+                    consoleMessage.sourceId();
+                    consoleMessage.lineNumber();
+                    return true;
+                }
+            });
+            this.webView.setWebViewClient(new WebViewClient() { // from class: com.appnext.actionssdk.ActionsServiceActivity.5
+                @Override // android.webkit.WebViewClient
+                public final void onPageFinished(WebView webView2, String str) {
+                    super.onPageFinished(webView2, str);
+                    ActionsServiceActivity.a(ActionsServiceActivity.this);
+                }
+
+                @Override // android.webkit.WebViewClient
+                public final boolean shouldOverrideUrlLoading(WebView webView2, String str) {
+                    if (str == null) {
+                        return false;
+                    }
+                    if (str.startsWith("http")) {
+                        webView2.loadUrl(str);
+                        return true;
+                    }
+                    return super.shouldOverrideUrlLoading(webView2, str);
+                }
+            });
+            this.webView.addJavascriptInterface(new a(), "Appnext");
+            final String str = this.bp;
+            AppnextWebView.B(this).a(str, new AppnextWebView.c() { // from class: com.appnext.actionssdk.ActionsServiceActivity.6
+                public final void b(String str2) {
+                    new Handler(Looper.getMainLooper()).post(new Runnable() { // from class: com.appnext.actionssdk.ActionsServiceActivity.6.1
+                        @Override // java.lang.Runnable
+                        public final void run() {
+                            ActionsServiceActivity.b(ActionsServiceActivity.this, true);
+                            AnonymousClass6 anonymousClass6 = AnonymousClass6.this;
+                            ActionsServiceActivity actionsServiceActivity = ActionsServiceActivity.this;
+                            ActionsServiceActivity.a(actionsServiceActivity, str, AppnextWebView.B(actionsServiceActivity).aV(str));
+                        }
+                    });
+                }
+
+                @Override // com.appnext.core.webview.AppnextWebView.c
+                public final void error(String str2) {
+                    new Handler(Looper.getMainLooper()).post(new Runnable() { // from class: com.appnext.actionssdk.ActionsServiceActivity.6.2
+                        @Override // java.lang.Runnable
+                        public final void run() {
+                            ActionsServiceActivity.b(ActionsServiceActivity.this, true);
+                            AnonymousClass6 anonymousClass6 = AnonymousClass6.this;
+                            ActionsServiceActivity actionsServiceActivity = ActionsServiceActivity.this;
+                            String str3 = str;
+                            new l();
+                            ActionsServiceActivity.a(actionsServiceActivity, str3, "var Appnext=function(e){var t=e;return t.css='html,body{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%;height:100% !important;width:100% !important;padding:0 !important;margin:0 !important;overflow:hidden !important;font-size:85%;max-width:100%;min-width:100%;-moz-user-select:none;-webkit-user-select:none;user-select:none;position:fixed;text-align:left !important;line-height:normal}html>img,body>img{position:absolute;z-index:-1}.md-scroll-mask{position:initial}#appnext{direction:ltr !important;background:#dcdcdc;-webkit-font-smoothing:antialiased;overflow:hidden;width:100%;height:100%;font-family:sans-serif !important;position:absolute;top:0;left:0;margin:0;padding:0;-moz-transform:scale(1.01, 1.01);text-align:left !important}#appnext .center{position:absolute;top:50%;transform:translateY(-50%);-webkit-transform:translateY(-50%)}#appnext i{display:inline-block;font-style:normal}#appnext div{direction:ltr !important;text-align:left}#appnext .caption{background:transparent;margin:0;padding:0}#appnext .disclosure{-webkit-tap-highlight-color:none;color:#BDBDBD;z-index:10000;display:block;width:1.8em;height:1.8em;right:0;top:6px;position:absolute;background-repeat:no-repeat;background-size:71%;background-position:center;background-image:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RTJDQzA2RjkyOTYwMTFFNkE1MDVDRkVBNzkwQ0Q1ODkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RTJDQzA2RkEyOTYwMTFFNkE1MDVDRkVBNzkwQ0Q1ODkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpFMkNDMDZGNzI5NjAxMUU2QTUwNUNGRUE3OTBDRDU4OSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpFMkNDMDZGODI5NjAxMUU2QTUwNUNGRUE3OTBDRDU4OSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PlU7OdUAAAKvSURBVHjaxJfPS1RRFMfnORUtxiAwWkiGqUVgqzLol+TQL/pBbdIpitzUUtpE1h/Q1C5cZwiBKbiJfgz9YAKLishVLqK0yNoVCOmmwHl9L30G3rzezLtv9DEHPt7Befd7ztxz73nnOq7rJmppy8yffD5fE+fpdPpfAJbmiD3iiNglWsVqvpsVU+KVeCBeCNd6BUKsTvSKKzgNsrVgArtEMFkxJAph4pWsWbwRgzifETfEQbFOrBT1YrM4xHdfeHaQuc3VBrBXvBUdOD4tNoh+8UR8F7/FvPggHvNdG8/OMNdodEYN4ACCDeR0i7grFixStsCz7cw1Gk9ZNasANokxsUIMiOPiVxWbfI65A2iNoV0xgKS4Q15HxcWwTRRiBTSMVgrtZKUAzpG3b+K8xVHaKi57jmOQuWgV90RvuQAcjlqCzTRn8QtNbq+LCxbp8Go7QQF0cny+smQ29jlCOkbRbvWeCm8AhxlHLHe7sf1iG+ff5nSM+HyVBLCT8XmEX3VS7KM+2FhRe0dQKW5jnKwigAnLdBS1NwatQHEn/4zxBfjD5yv0XRC7eQOYZWyI0d8an6+SAD4xtscYQFH7Y1AArxm7Ygygy+erJICHjBl/vV7CdGf4/CgogHE6mfWiJ4YAMmhP0bL9F4BLXU/QTqUsK6Gp689CnkuhmcBHodwxND3cO9EkbnlfGoswB60mCtZQpdexqddnabNMGm4uslbUodGD5hn/eyZI3PR33eKP6BP3xKoqnNcztw+tbrStesKcOEHUR8V7ccpyNZI8O8ncebRyUbviHB3MBPkbpuXO0rQ2iuXQyP+yFLRhT847yjm3uZiYJdtOG3VVtNDR9IfMmxbXbC4mNjcjI3Absd3iGL1Di+9qNs3V7L54advMRrkbFihW40tZnZxaX8//CjAAq56aKzL+/C8AAAAASUVORK5CYII=\")}#appnext .disclosure.gdpr{top:0;background-size:50%;background-position:top right;background-image:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAMAAAC7faEHAAAAZlBMVEXNzMwArs1WusyTw8xEuM0Ir83Jy8zFy8y2yMxhvMwWsc2kxsx1v8wttM0dss0QsM2/ysyoxsyaxMyNwsyfxcyHwcyAwMxrvcxLucw3tsw+t80ytc0ks826ycyxx8yux8xovcxPucxOwgPRAAAA+0lEQVQ4y83Tx27DMBAE0CUpdvXuEpf//8lIngS+sOhmz4kQHiAsOUufje7UEXZvWD0ccJZtuYxZx9krxT3vEP6TdYhcdMYtJ0g3q6QTJK6QV5F2pGYHeeqSjkgvEnI1SUfUckBp24TTthC3ArIpVcThYQyNFWQ9xdy6HfYZhhqyGsOul+z8+psqG8izCTkyvSKktRjdtQHXOVb8Q/KAQ8A9t4PHN/0Akybg9ivpac/k/ibxlHC+gnITUdyZ9V2yuBMPCfZEaWMOCp2JOwTrl3GoQNahUlE382qmct/OW3bfvCr5eGAvh2N7ftEZZ9FeRZl4iavIxghNX5lfdnkJssV7DcsAAAAASUVORK5CYII=\")}#appnext .close_button{background:url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1NDNhZDlhYS1mOTFhLTQ0ZjgtODkzZi1kYjFhOTkzZTlkOWMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MEE0M0RFRURFQTE2MTFFNkFGNzdGNUZBOUUzODMwMDMiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MEE0M0RFRUNFQTE2MTFFNkFGNzdGNUZBOUUzODMwMDMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4NGYxOGIyZC02NjliLTQ2NGItODYwYy1lZWQ5ZWJiN2E0YmQiIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDpjMDI5ODU5MC0zMjdhLTExN2EtYTg3NS05NGY0NjI2NDY5Y2QiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4IEYrYAAAB1klEQVR42uyYz2rCQBDG15iWLe1F2oKk4EE0l+ILiYdeRfDqK3j2EYx4E/HQm0J9iF5EPLTUS1uKmFIp+dP9BIsHs2ZnkYbiwCRZszP7Y8x8WTUZY/fCz9nf26cpDpfCzQTAcEMcViwZtjJYguwI8z9gLMsym81mNpVKkRZAHOKRRwsGCcbjsd1oNG46nU5OFQjzEYd45NkHJIWp1+tXhULhDNflcvlaBWgDgjiMkQf5ZDFp4XfCT3fdHI1GbrFYPCmVSmuFxhnjfr+/UAGBdbvd11qt9iIJ+5bCwLCwClAUSKVSeQrDkGnBqABpgMSHiQOkCaIGIwMaDAYLx3F0QNYwaI0H4Req7bq98Gw2W+Xzea4BAnOVKhNVoUwmY2qC0CrzqwnpNJtMJrfbFUGFbNt+9H2fItauQZX4drud2waBYYzPqa8OgwKy65nZXKsqNRkmqn3x1eCsCxT7AZbpSBAEykpN1pm4gqYJtB9GVVk1gOQwVIknAslhsEOrVqtZiqDtAuKch8Ph0I2CkXZTq9V6m06nXxRlxTzM33QZ8iAfuZuWy2XQ6/U+PM/zsTEiSPy6QqiIqPDzfD73DvI6OIC5x99NRxgKDE8IC8cO7T0p/1z9CDAAgQ5q19jV5XkAAAAASUVORK5CYII=\");position:absolute;background-size:80%;top:0;right:0;width:50px;height:50px;background-repeat:no-repeat;z-index:1000;background-position:top right;z-index:1000}#appnext .wrp{position:relative;height:100%;width:100%;margin:0;padding:0}#appnext .wrp .header{height:74px;background-size:cover;background-repeat:no-repeat;position:relative}#appnext .wrp .container{width:100%;top:0;left:0;margin:0;padding:0;height:100%}#appnext .wrp .container nav{position:relative;margin-top:16px;width:93%;height:30px;margin-left:4%;margin-bottom:2px}#appnext .wrp .container nav ul.tabs{width:100%;list-style:none;padding:0;margin:0;text-transform:uppercase;font-size:1.2em;font-style:italic;position:absolute;top:0;z-index:10}#appnext .wrp .container nav ul.tabs li{display:inline-block;margin:0;padding:0;padding-bottom:1%;margin-right:5%;color:#6f6f6f;position:relative;max-width:40%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#appnext .wrp .container nav ul.tabs li.active{font-weight:bold}#appnext .wrp .container nav ul.tabs li.active span{display:block;width:100%;height:6px;background:#3499e7;position:absolute;bottom:-6px}#appnext .wrp .container nav .sep{background:#cecece;height:2px;position:absolute;bottom:6px;width:100%;z-index:1}#appnext .wrp .container .more_apps{width:100%;overflow:hidden;overflow-y:auto;height:100%}#appnext .wrp .container .more_apps .suggested_apps{height:100%;width:100%;margin:0 auto}#appnext .wrp .container .more_apps .suggested_apps>div.title{padding:2.5% 6%;background-color:rgba(76,93,128,0.8);letter-spacing:0.2px;color:#ffffff;font-size:1.3em;position:relative}#appnext .wrp .container .more_apps .suggested_apps>div.title:first-child{padding:3.5% 6%;font-size:1.5em;background-color:#4c5d80}#appnext .wrp .container .more_apps .suggested_apps>div.app_container{background:white;padding:3% 0;box-shadow:0 -3px 7px -1px rgba(0,0,0,0.1);position:relative;min-height:15%}#appnext .wrp .container .more_apps .suggested_apps>div.app_container>div{display:inline-block;vertical-align:top}#appnext .wrp .container .more_apps .suggested_apps>div.app_container>div.icon{width:20%;text-align:center;background:none;margin:0 2%}#appnext .wrp .container .more_apps .suggested_apps>div.app_container>div.icon img{height:auto !important;width:80% !important}#appnext .wrp .container .more_apps .suggested_apps>div.app_container>div.caption{width:55%;font-size:1.35em;color:rgba(74,74,74,0.79);margin-left:24%;font-weight:300}#appnext .wrp .container .more_apps .suggested_apps>div.app_container>div.caption .title{text-align:left;margin:0;padding:0;font-size:1.01em;font-weight:bold;line-height:1.5em}#appnext .wrp .container .more_apps .suggested_apps>div.app_container>div.caption .dec{width:90%}#appnext .wrp .container .more_apps .suggested_apps>div.app_container>div.cta{position:absolute;bottom:7%;right:2%;width:auto;text-transform:uppercase;text-align:center;font-size:1.1em;color:rgba(76,93,128,0.8)}#appnext .wrp .footer{display:none;height:8%;width:100%;position:absolute;bottom:0;background-repeat:no-repeat;background-position:50%;background-color:#333;background-size:50%;z-index:20}#appnext .wrp .footer .skip{-webkit-tap-highlight-color:none;position:relative;height:100%;float:right;width:22%}#appnext .wrp .footer .skip .skipText{text-align:right;z-index:100;color:#BDBDBD;width:100%;right:15%}#appnext *::-webkit-media-controls-panel{display:none !important;-webkit-appearance:none}#appnext *::--webkit-media-controls-play-button{display:none !important;-webkit-appearance:none}#appnext *::-webkit-media-controls-start-playback-button{display:none !important;-webkit-appearance:none}template{display:none}@keyframes pulse{0%{background-color:#001F3F}100%{background-color:#FF4136}} ',t.build=\"1529322133763\",t.template='<div class=\"wrp\">   <div class=\"disclosure \"></div>    <div class=\"container\">              <div class=\"more_apps\">            <div class=\"suggested_apps\"></div>        </div>    </div>    \\x3c!--div class=\"close_button\"></div--\\x3e       <template id=\"app_template\">        <div class=\"app_container\">            <div class=\"icon center\">              <img/>            </div>           <div class=\"caption center\">              <div class=\"title\"></div>                          <div class=\"desc\"></div>           </div>          <div class=\"cta\">            Install          </div>       </div>    </template>    </div>',t.vid=t.vid||\"2\",t.tid=t.tid||\"300\",t.osid=t.osid||\"100\",t.ads_type=\"interstitial_tag\",t}(Appnext||{}),Appnext=function(e){function t(e){for(var t={},n=[],i=0;i<e.length;i++){var o={};o.action=e[i].action,o.apps=[];for(var a=0;a<e[i].apps.length;a++)t.hasOwnProperty(e[i].apps[a].app_package)||(o.apps.push(e[i].apps[a]),t[e[i].apps[a].app_package]=!0);o.apps.length>0&&n.push(o)}return n}function n(e,t){i.Layout.Disclosure.addEventListener(\"click\",function(t){t.stopPropagation();var n=e.country||\"\",o=\"\",a=e.tracking_link.match(\"[?&]e=([^&]+)\");a&&a.length>0&&(o=Math.floor(10*Math.random())+a[1]+Math.floor(10*Math.random()));var p=\"https://www.appnext.com/privacy_policy/index.html?z=\"+o+\"&geo=\"+n;1==e.gdpr&&(p+=\"&edda=1\"),i.redirect(p)},!1),1==e.gdpr&&i.Layout.Disclosure.classList.add(\"gdpr\"),t.appendChild(i.Layout.Disclosure)}var i=e;return i.id=i.android_id||i.id,i.timstamp=Date.now(),i.API=function(){function e(e,t,n){var i=new XMLHttpRequest;i.open(n,e,!0),i.onload=t;var o=new FormData;i.send(o)}function t(e,t,n,i){window.callback=function(e){return e||!0}(t);var o=document.createElement(\"script\");e+=~e.indexOf(\"?\")?\"&\":\"?\",o.src=e,o.className=\"appnext_cb\",o.type=void 0!==i&&i?i:\"text/javascript\",o.async=!0;try{document.body?document.body.appendChild(o):document.head.appendChild(o)}catch(e){return!!n&&n(e)}}var n={data:\"./data.json\",log:\"https://admin.appnext.com/tp12.aspx\",config:\"https://cdn.appnext.com/tools/sdk/actions_webview/config/2.3.1/\"};return{buildUrl:function(e,t){var n=[];for(var i in t)n.push(encodeURIComponent(i)+\"=\"+encodeURIComponent(t[i]));return e+\"?\"+n.join(\"&\")},loadAds:function(t){if(i.getActionsData)return void t(i.getActionsData());var o=n.data;e(o,t,\"GET\")},loadConfig:function(e){var o=\"en\";switch(i.lang){case\"zh\":o=\"zh\";break;case\"ru\":o=\"ru\";break;case\"de\":o=\"de\"}t(n.config+o+\"/result_config.json\",e,i.error,null)},log:function(e,o,a){if(e==i.API.TP12.Play||e==i.API.TP12.Ended){var p={tid:i.tid,vid:i.vid,osid:i.osid,auid:i.auid,pid:i.id,bid:a?a.bannerId:0,cid:a?a.campaignId:0,session_id:o?encodeURIComponent(o):null,ref:encodeURIComponent(e),ads_type:i.ads_type},r=n.log;t(this.buildUrl(r,p),function(e){return e},null,null)}},getRequest:function(e){t(e,null,null,null)},notifyImpression:function(e,t,n){if(!e.isImp){e.isImp=!0;var o=function(e,t,n){return function(){if(i.Layout.isVisible(t)){var o=JSON.stringify(e);i.actionImpression(o),i.actionPostView(o),n&&n()}else e.isImp=!1}}(e,t,n);return setTimeout(o,2e3)}},getStyleUrl:function(){return n.css},TP12:{},Error:{NoAds:\"NO_ADS\",Other:\"NO_ADS\"}}}(),i.Layout=function(){var e=i.template,t={Close_Button:\".close_button\",More_Apps:\".more_apps\",More_Apps_Section:\".suggested_apps\",Small_App_Template:\"#app_template\",Footer:\".footer\",Header:\".header\",Disclosure:\".disclosure\"},n=document.createElement(\"div\");n.id=\"appnext\",n.className=\"appnext\";var o,a,p,r=(screen.width<screen.height?screen.height:screen.width,{isLoaded:!1,isVisible:function(e){var t=e.getBoundingClientRect(),n=Math.max(document.documentElement.clientHeight,window.innerHeight);return!(t.bottom<0||t.top-n>=0)&&this.isLoaded},calcHeight:function(){window.scrollTo(0,1)},resize:function(){i.Layout.calcHeight(),setTimeout(i.Layout.calcHeight.call(i.Layout),100)},setTemplate:function(){},loadStyle:function(){if(!this.isLoaded){this.isLoaded=!0,n.innerHTML=e;var t=document.createElement(\"meta\");t.name=\"viewport\",t.content=\"user-scalable=1\";var r=document.querySelectorAll(\"meta[name='viewport']\");p=r[r.length-1]||t,a=document.createElement(\"meta\"),a.name=\"viewport\",a.content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0\";var c=i.css||\"\";o=document.createElement(\"style\"),o.type=\"text/css\",o.innerHTML=c,document.head.appendChild(o),document.head.appendChild(a),this.setTemplate()}},destroy:function(e){if(this.isLoaded){this.isLoaded=!1,document.head.removeChild(a),document.body.removeChild(this.Container),document.head.removeChild(this.Style),document.head.appendChild(p);for(var t=document.querySelectorAll(\".appnext_cb\"),n=0;n<t.length;n++)document.body.removeChild(t[n]);return window.removeEventListener(\"resize\",i.Layout.resize),e}},get Container(){return n},get Style(){return o},set Style(e){o=e},getAppTemplate:function(){var e={},t=document.createElement(\"div\");t.innerHTML=r.Small_App_Template.innerHTML;var n={App_Image:\".icon img\",Title:\".title\",Rate_Number:\".rate\",Rating:\".rating\",Description:\".desc\",Click_Section:\".app_container\",Container:\".app_container\",CTA:\".cta\"};for(var i in n)!function(n,i){Object.defineProperty(e,n,{get:function(){return t.querySelector(i[n])||document.createElement(\"div\")},enumerable:!0})}(i,n);return e}});for(var c in t)!function(e){Object.defineProperty(r,e,{get:function(){return n.querySelector(t[e])||document.createElement(\"div\")},enumerable:!0})}(c);return r}(),i.redirect=i.redirect||function(e){window.open(e,\"_top\")},i.setParams=function(e){for(key in e)i[key]=decodeURIComponent(e[key])},i.parseApp=function(e,t,n){var o=i.Layout.getAppTemplate();o.App_Image.src=e.icon_url||e.icon,o.Title.textContent=e.name,e.headline_engagement=e.headline_engagement?e.headline_engagement:\"\";var a=e.headline_engagement.length>46?e.headline_engagement.slice(0,46)+\"...\":e.headline_engagement;if(o.Description.textContent=a,i.config.hasOwnProperty(n)){var p=i.config[n];o.CTA.textContent=p.cta,o.CTA.style.color=p.color}return o.Click_Section.addEventListener(\"click\",function(e){console.log(t)}),o.Click_Section.addEventListener(\"click\",function(n){i.adClicked(JSON.stringify(e),t)}),o.App_Image.addEventListener(\"load\",function(){i.API.notifyImpression(e,this)}),function(t,n){e.imp=function(){i.API.notifyImpression(t,n)}}(e,o.App_Image),o.Container},i.parseTitle=function(e,t){var n=document.createElement(\"div\");return n.classList.add(\"title\"),n.innerText=e,i.config.hasOwnProperty(t)&&(n.style.background=i.config[t].color),n},i.selectedApps=i.selectedApps||function(e){console.log(\"selectedApps\")},i.setContent=function(e){i.setDisclosureIcon=!1;var t=i.config[i.action].related;i.Layout.More_Apps_Section.innerHTML=\"\";for(var o=[],a=0,p=i.config.campaigns_amount,r=0,c=0;c<t.length;c++){var s=t[c];if(e.hasOwnProperty(s)){var d=e[s];if(0==d.length)continue;if(p-a<1)continue;var l=0==c?i.config[s].title_main:i.config[s].title,g=i.parseTitle(l,s);i.Layout.More_Apps_Section.appendChild(g);for(var u=0;u<d.length&&p-a>0;u++,a++)!function(e,t,o,a){var p=i.parseApp(e,t,o);i.Layout.More_Apps_Section.appendChild(p),i.setDisclosureIcon||(i.setDisclosureIcon=!0,n(d[u],a))}(d[u],r++,s,g),o.push(d[u])}}i.selectedApps(JSON.stringify(o)),i.Layout.More_Apps.onscroll=function(e){for(var t=0;t<o.length;t++)o[t].imp();i.isScrollEvent||(i.isScrollEvent=!0,i.onScrollEvent())}},i.parseAds=function(e){function n(){var e=Date.now()-i.timstamp;i.API.log(i.API.TP12.AdClosed,e.toString()),i.Layout.destroy(\"close\"),i.skip_url&&window.open(i.skip_url)}try{var o=this.responseText||e;e=t(JSON.parse(o));for(var a={},p=0;p<e.length;p++)a[e[p].action]=e[p].apps,e[p].apps.length>0&&e[p].apps[0];i.Layout.loadStyle(),document.body.appendChild(i.Layout.Container),i.setContent(a),window.addEventListener(\"resize\",i.Layout.resize,!1,!0),i.Layout.Close_Button.addEventListener(\"click\",n)}catch(e){return i.error(e),!1}},i.error=i.error||function(e){console.log(e)},i.load=function(e){return i.API.loadConfig(function(t){i.config=t,i.action=e,i.API.loadAds(i.parseAds)}),!0},i}(Appnext);");
+                        }
+                    });
+                }
+            });
+            return;
+        }
+        finish();
+    }
+
+    @Override // com.appnext.actionssdk.ActionActivity, android.app.Activity
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            ((ViewGroup) this.webView.getParent()).removeView(this.webView);
+        } catch (Throwable unused) {
+        }
+        WebView webView = this.webView;
+        if (webView != null) {
+            webView.destroyDrawingCache();
+            this.webView.destroy();
+            this.webView = null;
+        }
+    }
+
+    @Override // com.appnext.actionssdk.ActionActivity, android.app.Activity
+    protected void onStop() {
+        super.onStop();
+        if (this.bs) {
+            finish();
+        } else {
+            this.bs = true;
+        }
+    }
+
+    static /* synthetic */ boolean a(ActionsServiceActivity actionsServiceActivity, boolean z10) {
+        actionsServiceActivity.br = true;
+        return true;
+    }
+
+    static /* synthetic */ boolean b(ActionsServiceActivity actionsServiceActivity, boolean z10) {
+        actionsServiceActivity.bq = true;
+        return true;
+    }
+
+    static /* synthetic */ boolean c(ActionsServiceActivity actionsServiceActivity, boolean z10) {
+        actionsServiceActivity.bs = false;
+        return false;
+    }
+
+    static /* synthetic */ void a(ActionsServiceActivity actionsServiceActivity) {
+        if (actionsServiceActivity.bq && actionsServiceActivity.br) {
+            JSONObject jSONObject = new JSONObject();
+            jSONObject.put("vid", "2.4.6.472");
+            jSONObject.put(ScarConstants.TOKEN_ID_KEY, "");
+            jSONObject.put("auid", "");
+            jSONObject.put(ug.f21009x, actionsServiceActivity.bi);
+            jSONObject.put("osid", "100");
+            jSONObject.put(fe.f17443q, actionsServiceActivity.H.equals("") ? com.appnext.base.b.f.cg() : actionsServiceActivity.H);
+            actionsServiceActivity.loadJS("javascript:(function() { try { Appnext.setParams(" + jSONObject.toString() + "); } catch(err){ Appnext.jsError(err.message); }})()");
+            actionsServiceActivity.loadJS("javascript:(function() { try { Appnext.load('" + actionsServiceActivity.bo + "'); } catch(err){ Appnext.jsError(err.message); }})()");
+        }
+    }
+
+    static /* synthetic */ void a(ActionsServiceActivity actionsServiceActivity, String str, String str2) {
+        try {
+            URL url = new URL(str);
+            actionsServiceActivity.webView.loadDataWithBaseURL(url.getProtocol() + "://" + url.getHost(), "<html><body><script>" + str2 + "</script></body></html>", null, "UTF-8", null);
+        } catch (Throwable unused) {
+        }
+    }
+}

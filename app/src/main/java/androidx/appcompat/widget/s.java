@@ -1,0 +1,160 @@
+package androidx.appcompat.widget;
+
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.text.method.KeyListener;
+import android.util.AttributeSet;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
+import android.widget.MultiAutoCompleteTextView;
+/* compiled from: AppCompatMultiAutoCompleteTextView.java */
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+public class s extends MultiAutoCompleteTextView implements androidx.core.view.y {
+
+    /* renamed from: d  reason: collision with root package name */
+    private static final int[] f1727d = {16843126};
+
+    /* renamed from: a  reason: collision with root package name */
+    private final e f1728a;
+
+    /* renamed from: b  reason: collision with root package name */
+    private final b0 f1729b;
+
+    /* renamed from: c  reason: collision with root package name */
+    private final m f1730c;
+
+    public s(Context context, AttributeSet attributeSet) {
+        this(context, attributeSet, e.a.f24555p);
+    }
+
+    void a(m mVar) {
+        KeyListener keyListener = getKeyListener();
+        if (mVar.b(keyListener)) {
+            boolean isFocusable = super.isFocusable();
+            int inputType = super.getInputType();
+            KeyListener a10 = mVar.a(keyListener);
+            if (a10 == keyListener) {
+                return;
+            }
+            super.setKeyListener(a10);
+            super.setRawInputType(inputType);
+            super.setFocusable(isFocusable);
+        }
+    }
+
+    @Override // android.widget.TextView, android.view.View
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        e eVar = this.f1728a;
+        if (eVar != null) {
+            eVar.b();
+        }
+        b0 b0Var = this.f1729b;
+        if (b0Var != null) {
+            b0Var.b();
+        }
+    }
+
+    @Override // androidx.core.view.y
+    public ColorStateList getSupportBackgroundTintList() {
+        e eVar = this.f1728a;
+        if (eVar != null) {
+            return eVar.c();
+        }
+        return null;
+    }
+
+    @Override // androidx.core.view.y
+    public PorterDuff.Mode getSupportBackgroundTintMode() {
+        e eVar = this.f1728a;
+        if (eVar != null) {
+            return eVar.d();
+        }
+        return null;
+    }
+
+    @Override // android.widget.TextView, android.view.View
+    public InputConnection onCreateInputConnection(EditorInfo editorInfo) {
+        return this.f1730c.d(o.a(super.onCreateInputConnection(editorInfo), editorInfo, this), editorInfo);
+    }
+
+    @Override // android.view.View
+    public void setBackgroundDrawable(Drawable drawable) {
+        super.setBackgroundDrawable(drawable);
+        e eVar = this.f1728a;
+        if (eVar != null) {
+            eVar.f(drawable);
+        }
+    }
+
+    @Override // android.view.View
+    public void setBackgroundResource(int i10) {
+        super.setBackgroundResource(i10);
+        e eVar = this.f1728a;
+        if (eVar != null) {
+            eVar.g(i10);
+        }
+    }
+
+    @Override // android.widget.AutoCompleteTextView
+    public void setDropDownBackgroundResource(int i10) {
+        setDropDownBackgroundDrawable(f.a.b(getContext(), i10));
+    }
+
+    public void setEmojiCompatEnabled(boolean z10) {
+        this.f1730c.e(z10);
+    }
+
+    @Override // android.widget.TextView
+    public void setKeyListener(KeyListener keyListener) {
+        super.setKeyListener(this.f1730c.a(keyListener));
+    }
+
+    @Override // androidx.core.view.y
+    public void setSupportBackgroundTintList(ColorStateList colorStateList) {
+        e eVar = this.f1728a;
+        if (eVar != null) {
+            eVar.i(colorStateList);
+        }
+    }
+
+    @Override // androidx.core.view.y
+    public void setSupportBackgroundTintMode(PorterDuff.Mode mode) {
+        e eVar = this.f1728a;
+        if (eVar != null) {
+            eVar.j(mode);
+        }
+    }
+
+    @Override // android.widget.TextView
+    public void setTextAppearance(Context context, int i10) {
+        super.setTextAppearance(context, i10);
+        b0 b0Var = this.f1729b;
+        if (b0Var != null) {
+            b0Var.q(context, i10);
+        }
+    }
+
+    public s(Context context, AttributeSet attributeSet, int i10) {
+        super(w0.b(context), attributeSet, i10);
+        u0.a(this, getContext());
+        z0 v10 = z0.v(getContext(), attributeSet, f1727d, i10, 0);
+        if (v10.s(0)) {
+            setDropDownBackgroundDrawable(v10.g(0));
+        }
+        v10.w();
+        e eVar = new e(this);
+        this.f1728a = eVar;
+        eVar.e(attributeSet, i10);
+        b0 b0Var = new b0(this);
+        this.f1729b = b0Var;
+        b0Var.m(attributeSet, i10);
+        b0Var.b();
+        m mVar = new m(this);
+        this.f1730c = mVar;
+        mVar.c(attributeSet, i10);
+        a(mVar);
+    }
+}

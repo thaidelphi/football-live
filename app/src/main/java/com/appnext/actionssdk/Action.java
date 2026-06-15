@@ -1,0 +1,43 @@
+package com.appnext.actionssdk;
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+public class Action {
+    public static String ACTION_COLOR_BLACK = "black";
+    public static String ACTION_COLOR_WHITE = "white";
+    public static String BOOK_A_FLIGHT = "sabv";
+    public static String BOOK_A_HOTEL = "sabh";
+    public static String EDIT_AN_IMAGE = "saei";
+    public static String FIND_A_RESTAURANT = "safpe";
+    public static String FIND_PUBLIC_TRANSPORTATION = "sapt";
+    public static String LISTEN_TO_MUSIC = "salmu";
+    public static String MEET_NEW_PEOPLE = "samnp";
+    public static String NAVIGATE_TO_DESTINATION = "sand";
+    public static String OPTIMIZE_MY_PHONE = "saop";
+    public static String ORDER_A_TAXI = "saot";
+    public static String ORDER_FOOD = "saof";
+    public static String PLAY_AN_ACTION_GAME = "sapat";
+    public static String PLAY_AN_ADVENTURE_GAME = "sapad";
+    public static String PLAY_AN_ARCADE_GAME = "sapag";
+    public static String PLAY_AN_EDUCATIONAL_GAME = "sapeg";
+    public static String PLAY_A_BOARD_GAME = "sapbg";
+    public static String PLAY_A_CARD_GAME = "sapcr";
+    public static String PLAY_A_CASINO_GAME = "sapcg";
+    public static String PLAY_A_CASUAL_GAME = "sapca";
+    public static String PLAY_A_GAME = "spag";
+    public static String PLAY_A_MUSIC_GAME = "sapmg";
+    public static String PLAY_A_PUZZLE_GAME = "sappg";
+    public static String PLAY_A_RACING_GAME = "saprg";
+    public static String PLAY_A_ROLE_PLAYING_GAME = "saprp";
+    public static String PLAY_A_SIMULATION_GAME = "sapsp";
+    public static String PLAY_A_SPORT_GAME = "sapsg";
+    public static String PLAY_A_STRATEGY_GAME = "sapst";
+    public static String PLAY_A_TRIVIA_GAME = "saptg";
+    public static String PLAY_A_WORDS_GAME = "sapwg";
+    public static String RECHARGE = "sare";
+    protected static final String SERVER_URL = "https://api.appnxt.net";
+    protected static final String SETTINGS_URL = "https://cdn.appnext.com/tools/sdk/confign";
+    public static String START_EXERCISING = "sastr";
+    public static String START_SHOPPING = "saso";
+    protected static String VID = "2.4.6.472";
+    public static String WATCH_A_MOVIE = "sawmo";
+    protected static String[] completeActionList = {"salmu", "sawmo", "sastr", "sand", "saof", "safpe", "saot", "sapt", "sapag", "sapcg", "spag", "sapat", "sapbg", "sapcr", "sapca", "sappg", "saprg", "saprp", "sapsp", "sapsg", "sapst", "saptg", "sapad", "sapwg", "sapeg", "sapmg", "saso", "sabv", "sabh", "saei", "samnp", "saop", "sare"};
+}

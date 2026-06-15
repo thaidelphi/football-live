@@ -1,0 +1,163 @@
+package com.google.android.exoplayer2.metadata.emsg;
+
+import a5.p0;
+import android.os.Parcel;
+import android.os.Parcelable;
+import com.google.android.exoplayer2.metadata.Metadata;
+import com.ironsource.mediationsdk.logger.IronSourceError;
+import java.util.Arrays;
+import n3.m1;
+import n3.z1;
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+public final class EventMessage implements Metadata.Entry {
+
+    /* renamed from: a  reason: collision with root package name */
+    public final String f10565a;
+
+    /* renamed from: b  reason: collision with root package name */
+    public final String f10566b;
+
+    /* renamed from: c  reason: collision with root package name */
+    public final long f10567c;
+
+    /* renamed from: d  reason: collision with root package name */
+    public final long f10568d;
+
+    /* renamed from: e  reason: collision with root package name */
+    public final byte[] f10569e;
+
+    /* renamed from: f  reason: collision with root package name */
+    private int f10570f;
+
+    /* renamed from: g  reason: collision with root package name */
+    private static final m1 f10563g = new m1.b().e0("application/id3").E();
+
+    /* renamed from: h  reason: collision with root package name */
+    private static final m1 f10564h = new m1.b().e0("application/x-scte35").E();
+    public static final Parcelable.Creator<EventMessage> CREATOR = new a();
+
+    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+    class a implements Parcelable.Creator<EventMessage> {
+        a() {
+        }
+
+        @Override // android.os.Parcelable.Creator
+        /* renamed from: a */
+        public EventMessage createFromParcel(Parcel parcel) {
+            return new EventMessage(parcel);
+        }
+
+        @Override // android.os.Parcelable.Creator
+        /* renamed from: b */
+        public EventMessage[] newArray(int i10) {
+            return new EventMessage[i10];
+        }
+    }
+
+    public EventMessage(String str, String str2, long j10, long j11, byte[] bArr) {
+        this.f10565a = str;
+        this.f10566b = str2;
+        this.f10567c = j10;
+        this.f10568d = j11;
+        this.f10569e = bArr;
+    }
+
+    @Override // com.google.android.exoplayer2.metadata.Metadata.Entry
+    public m1 E() {
+        String str = this.f10565a;
+        str.hashCode();
+        char c10 = 65535;
+        switch (str.hashCode()) {
+            case -1468477611:
+                if (str.equals("urn:scte:scte35:2014:bin")) {
+                    c10 = 0;
+                    break;
+                }
+                break;
+            case -795945609:
+                if (str.equals("https://aomedia.org/emsg/ID3")) {
+                    c10 = 1;
+                    break;
+                }
+                break;
+            case 1303648457:
+                if (str.equals("https://developer.apple.com/streaming/emsg-id3")) {
+                    c10 = 2;
+                    break;
+                }
+                break;
+        }
+        switch (c10) {
+            case 0:
+                return f10564h;
+            case 1:
+            case 2:
+                return f10563g;
+            default:
+                return null;
+        }
+    }
+
+    @Override // com.google.android.exoplayer2.metadata.Metadata.Entry
+    public /* synthetic */ void J(z1.b bVar) {
+        y3.a.c(this, bVar);
+    }
+
+    @Override // com.google.android.exoplayer2.metadata.Metadata.Entry
+    public byte[] R() {
+        if (E() != null) {
+            return this.f10569e;
+        }
+        return null;
+    }
+
+    @Override // android.os.Parcelable
+    public int describeContents() {
+        return 0;
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || EventMessage.class != obj.getClass()) {
+            return false;
+        }
+        EventMessage eventMessage = (EventMessage) obj;
+        return this.f10567c == eventMessage.f10567c && this.f10568d == eventMessage.f10568d && p0.c(this.f10565a, eventMessage.f10565a) && p0.c(this.f10566b, eventMessage.f10566b) && Arrays.equals(this.f10569e, eventMessage.f10569e);
+    }
+
+    public int hashCode() {
+        if (this.f10570f == 0) {
+            String str = this.f10565a;
+            int hashCode = (IronSourceError.ERROR_NON_EXISTENT_INSTANCE + (str != null ? str.hashCode() : 0)) * 31;
+            String str2 = this.f10566b;
+            int hashCode2 = str2 != null ? str2.hashCode() : 0;
+            long j10 = this.f10567c;
+            long j11 = this.f10568d;
+            this.f10570f = ((((((hashCode + hashCode2) * 31) + ((int) (j10 ^ (j10 >>> 32)))) * 31) + ((int) (j11 ^ (j11 >>> 32)))) * 31) + Arrays.hashCode(this.f10569e);
+        }
+        return this.f10570f;
+    }
+
+    public String toString() {
+        return "EMSG: scheme=" + this.f10565a + ", id=" + this.f10568d + ", durationMs=" + this.f10567c + ", value=" + this.f10566b;
+    }
+
+    @Override // android.os.Parcelable
+    public void writeToParcel(Parcel parcel, int i10) {
+        parcel.writeString(this.f10565a);
+        parcel.writeString(this.f10566b);
+        parcel.writeLong(this.f10567c);
+        parcel.writeLong(this.f10568d);
+        parcel.writeByteArray(this.f10569e);
+    }
+
+    EventMessage(Parcel parcel) {
+        this.f10565a = (String) p0.j(parcel.readString());
+        this.f10566b = (String) p0.j(parcel.readString());
+        this.f10567c = parcel.readLong();
+        this.f10568d = parcel.readLong();
+        this.f10569e = (byte[]) p0.j(parcel.createByteArray());
+    }
+}

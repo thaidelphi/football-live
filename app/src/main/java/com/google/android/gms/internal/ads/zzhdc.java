@@ -1,0 +1,13 @@
+package com.google.android.gms.internal.ads;
+/* compiled from: com.google.android.gms:play-services-ads@@24.0.0 */
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes2.dex */
+public abstract class zzhdc {
+    public static zzhdc zzb(Class cls) {
+        if (System.getProperty("java.vm.name").equalsIgnoreCase("Dalvik")) {
+            return new zzhcx(cls.getSimpleName());
+        }
+        return new zzhcz(cls.getSimpleName());
+    }
+
+    public abstract void zza(String str);
+}

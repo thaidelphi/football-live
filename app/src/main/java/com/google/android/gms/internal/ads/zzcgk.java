@@ -1,0 +1,17 @@
+package com.google.android.gms.internal.ads;
+/* compiled from: com.google.android.gms:play-services-ads@@24.0.0 */
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes2.dex */
+public final class zzcgk implements zzhdk {
+    private final zzcft zza;
+
+    public zzcgk(zzcft zzcftVar) {
+        this.zza = zzcftVar;
+    }
+
+    @Override // com.google.android.gms.internal.ads.zzheb, com.google.android.gms.internal.ads.zzhea
+    public final /* synthetic */ Object zzb() {
+        String zzf = this.zza.zzf();
+        zzhds.zzb(zzf);
+        return zzf;
+    }
+}

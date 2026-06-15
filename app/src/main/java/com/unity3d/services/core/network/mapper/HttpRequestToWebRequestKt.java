@@ -1,0 +1,20 @@
+package com.unity3d.services.core.network.mapper;
+
+import com.unity3d.services.core.network.model.HttpRequest;
+import com.unity3d.services.core.request.WebRequest;
+import kotlin.jvm.internal.n;
+/* compiled from: HttpRequestToWebRequest.kt */
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes3.dex */
+public final class HttpRequestToWebRequestKt {
+    public static final WebRequest toWebRequest(HttpRequest httpRequest) {
+        n.f(httpRequest, "<this>");
+        WebRequest webRequest = new WebRequest(httpRequest.getBaseURL(), httpRequest.getMethod().toString(), httpRequest.getHeaders(), httpRequest.getConnectTimeout(), httpRequest.getReadTimeout());
+        Object body = httpRequest.getBody();
+        if (body instanceof String) {
+            webRequest.setBody((String) httpRequest.getBody());
+        } else if (body instanceof byte[]) {
+            webRequest.setBody((byte[]) httpRequest.getBody());
+        }
+        return webRequest;
+    }
+}

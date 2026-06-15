@@ -1,0 +1,41 @@
+package com.google.android.gms.internal.ads;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import com.google.android.gms.common.internal.safeparcel.AbstractSafeParcelable;
+import com.google.android.gms.common.internal.safeparcel.SafeParcelWriter;
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
+/* compiled from: com.google.android.gms:play-services-ads@@24.0.0 */
+@SafeParcelable.Class
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes2.dex */
+public final class zzfmw extends AbstractSafeParcelable {
+    public static final Parcelable.Creator<zzfmw> CREATOR = new zzfmx();
+    @SafeParcelable.VersionField
+    public final int zza;
+    @SafeParcelable.Field
+    public final String zzb;
+    @SafeParcelable.Field
+    public final String zzc;
+
+    /* JADX INFO: Access modifiers changed from: package-private */
+    @SafeParcelable.Constructor
+    public zzfmw(@SafeParcelable.Param int i10, @SafeParcelable.Param String str, @SafeParcelable.Param String str2) {
+        this.zza = i10;
+        this.zzb = str;
+        this.zzc = str2;
+    }
+
+    @Override // android.os.Parcelable
+    public final void writeToParcel(Parcel parcel, int i10) {
+        int i11 = this.zza;
+        int a10 = SafeParcelWriter.a(parcel);
+        SafeParcelWriter.k(parcel, 1, i11);
+        SafeParcelWriter.r(parcel, 2, this.zzb, false);
+        SafeParcelWriter.r(parcel, 3, this.zzc, false);
+        SafeParcelWriter.b(parcel, a10);
+    }
+
+    public zzfmw(String str, String str2) {
+        this(1, str, str2);
+    }
+}

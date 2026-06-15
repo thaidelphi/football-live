@@ -1,0 +1,97 @@
+package com.facebook.ads.redexgen.X;
+
+import android.os.Process;
+import android.text.TextUtils;
+import java.lang.Thread;
+import java.util.Arrays;
+import java.util.Map;
+/* renamed from: com.facebook.ads.redexgen.X.8Q  reason: invalid class name */
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\assets\audience_network.dex */
+public final class C8Q implements Thread.UncaughtExceptionHandler {
+    public static byte[] A04;
+    public final C1899k0 A00;
+    public final C8X A01;
+    public final Thread.UncaughtExceptionHandler A02;
+    public final Map<String, String> A03;
+
+    static {
+        A01();
+    }
+
+    public static String A00(int i10, int i11, int i12) {
+        byte[] copyOfRange = Arrays.copyOfRange(A04, i10, i10 + i11);
+        for (int i13 = 0; i13 < copyOfRange.length; i13++) {
+            copyOfRange[i13] = (byte) ((copyOfRange[i13] - i12) - 48);
+        }
+        return new String(copyOfRange);
+    }
+
+    public static void A01() {
+        A04 = new byte[]{-79, -51, -102, -74, -64, -64, -74, -69, -76, 109, -112, -68, -69, -63, -78, -59, -63, -102, -90, -92, 101, -99, -104, -102, -100, -103, -90, -90, -94, 101, -104, -101, -86, 2, 17, 0, 18, 7, 7, 9, -10, 8, 13, 4, -7, -20, -18, -37, -19, -14, -23, -34, -40, -36, -24, -35, -34};
+    }
+
+    public C8Q(Thread.UncaughtExceptionHandler uncaughtExceptionHandler, C1899k0 c1899k0, C8P c8p) {
+        this(uncaughtExceptionHandler, c1899k0, c8p, C8Y.A00());
+    }
+
+    public C8Q(Thread.UncaughtExceptionHandler uncaughtExceptionHandler, C1899k0 c1899k0, C8P c8p, C8X c8x) {
+        this.A02 = uncaughtExceptionHandler;
+        if (c1899k0 != null) {
+            this.A00 = c1899k0;
+            this.A03 = c8p.A8x(c1899k0);
+            this.A01 = c8x;
+            return;
+        }
+        throw new IllegalArgumentException(A00(2, 15, 29));
+    }
+
+    public static void A02() {
+        try {
+            Process.killProcess(Process.myPid());
+        } catch (Throwable unused) {
+        }
+        try {
+            System.exit(10);
+        } catch (Throwable unused2) {
+        }
+    }
+
+    private void A03(Thread thread, Throwable th) {
+        if (this.A02 != null) {
+            this.A02.uncaughtException(thread, th);
+        } else {
+            A02();
+        }
+    }
+
+    @Override // java.lang.Thread.UncaughtExceptionHandler
+    public final void uncaughtException(Thread thread, Throwable th) {
+        try {
+            String A03 = AbstractC0700Cl.A03(this.A00, th);
+            if (!TextUtils.isEmpty(A03)) {
+                String stackTraceString = A00(17, 16, 7);
+                if (A03.contains(stackTraceString)) {
+                    Map<String, String> A02 = new C8O(A03, this.A03).A02();
+                    String A00 = A00(38, 7, 100);
+                    String stackTraceString2 = A00(33, 5, 111);
+                    A02.put(A00, stackTraceString2);
+                    Throwable A002 = BL.A00();
+                    String A003 = A00(45, 12, 73);
+                    if (A002 == th) {
+                        String stackTraceString3 = A00(1, 1, 108);
+                        A02.put(A003, stackTraceString3);
+                    } else {
+                        String stackTraceString4 = A00(0, 1, 81);
+                        A02.put(A003, stackTraceString4);
+                    }
+                    this.A01.AKC(new C06088e(this.A00.A09().A01(), this.A00.A09().A02(), A02), this.A00);
+                    if (C06419m.A22(this.A00)) {
+                        C06419m.A0d(this.A00);
+                    }
+                }
+            }
+        } catch (Exception unused) {
+        }
+        A03(thread, th);
+    }
+}

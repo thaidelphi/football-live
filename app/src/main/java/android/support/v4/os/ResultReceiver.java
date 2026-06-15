@@ -1,0 +1,99 @@
+package android.support.v4.os;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.v4.os.a;
+@SuppressLint({"BanParcelableUsage"})
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+public class ResultReceiver implements Parcelable {
+    public static final Parcelable.Creator<ResultReceiver> CREATOR = new a();
+
+    /* renamed from: a  reason: collision with root package name */
+    final boolean f697a = false;
+
+    /* renamed from: b  reason: collision with root package name */
+    final Handler f698b = null;
+
+    /* renamed from: c  reason: collision with root package name */
+    android.support.v4.os.a f699c;
+
+    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+    class a implements Parcelable.Creator<ResultReceiver> {
+        a() {
+        }
+
+        @Override // android.os.Parcelable.Creator
+        /* renamed from: a */
+        public ResultReceiver createFromParcel(Parcel parcel) {
+            return new ResultReceiver(parcel);
+        }
+
+        @Override // android.os.Parcelable.Creator
+        /* renamed from: b */
+        public ResultReceiver[] newArray(int i10) {
+            return new ResultReceiver[i10];
+        }
+    }
+
+    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+    class b extends a.AbstractBinderC0015a {
+        b() {
+        }
+
+        @Override // android.support.v4.os.a
+        public void A(int i10, Bundle bundle) {
+            ResultReceiver resultReceiver = ResultReceiver.this;
+            Handler handler = resultReceiver.f698b;
+            if (handler != null) {
+                handler.post(new c(i10, bundle));
+            } else {
+                resultReceiver.a(i10, bundle);
+            }
+        }
+    }
+
+    /* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+    class c implements Runnable {
+
+        /* renamed from: a  reason: collision with root package name */
+        final int f701a;
+
+        /* renamed from: b  reason: collision with root package name */
+        final Bundle f702b;
+
+        c(int i10, Bundle bundle) {
+            this.f701a = i10;
+            this.f702b = bundle;
+        }
+
+        @Override // java.lang.Runnable
+        public void run() {
+            ResultReceiver.this.a(this.f701a, this.f702b);
+        }
+    }
+
+    ResultReceiver(Parcel parcel) {
+        this.f699c = a.AbstractBinderC0015a.Z(parcel.readStrongBinder());
+    }
+
+    protected void a(int i10, Bundle bundle) {
+    }
+
+    @Override // android.os.Parcelable
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override // android.os.Parcelable
+    public void writeToParcel(Parcel parcel, int i10) {
+        synchronized (this) {
+            if (this.f699c == null) {
+                this.f699c = new b();
+            }
+            parcel.writeStrongBinder(this.f699c.asBinder());
+        }
+    }
+}

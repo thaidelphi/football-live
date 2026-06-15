@@ -1,0 +1,15 @@
+package com.google.android.gms.common.util;
+
+import com.google.android.gms.common.annotation.KeepForSdk;
+/* compiled from: com.google.android.gms:play-services-basement@@18.3.0 */
+@KeepForSdk
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+public class ClientLibraryUtils {
+    private ClientLibraryUtils() {
+    }
+
+    @KeepForSdk
+    public static boolean a() {
+        return false;
+    }
+}

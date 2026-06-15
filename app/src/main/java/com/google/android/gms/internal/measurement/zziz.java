@@ -1,0 +1,6 @@
+package com.google.android.gms.internal.measurement;
+/* JADX INFO: Access modifiers changed from: package-private */
+/* compiled from: com.google.android.gms:play-services-measurement-base@@21.1.1 */
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes2.dex */
+public abstract class zziz extends zzjd {
+}

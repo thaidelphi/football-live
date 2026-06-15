@@ -1,0 +1,6 @@
+/tools/
+*.zip
+.idea/
+.gradle/
+build/
+local.properties

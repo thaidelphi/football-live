@@ -1,0 +1,10 @@
+package com.iab.omid.library.unity3d.devicevolume;
+
+import android.content.Context;
+import android.os.Handler;
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes2.dex */
+public class e {
+    public d a(Handler handler, Context context, a aVar, c cVar) {
+        return new d(handler, context, aVar, cVar);
+    }
+}

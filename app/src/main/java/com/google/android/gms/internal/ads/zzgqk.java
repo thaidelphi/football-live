@@ -1,0 +1,68 @@
+package com.google.android.gms.internal.ads;
+/* compiled from: com.google.android.gms:play-services-ads@@24.0.0 */
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes2.dex */
+public final class zzgqk extends zzgwk implements zzgxw {
+    private static final zzgqk zza;
+    private static volatile zzgyd zzb;
+    private int zzc;
+    private int zzd;
+
+    static {
+        zzgqk zzgqkVar = new zzgqk();
+        zza = zzgqkVar;
+        zzgwk.zzbZ(zzgqk.class, zzgqkVar);
+    }
+
+    private zzgqk() {
+    }
+
+    public static zzgqi zzc() {
+        return (zzgqi) zza.zzaZ();
+    }
+
+    public static zzgqk zzf(zzgvc zzgvcVar, zzgvu zzgvuVar) throws zzgwz {
+        return (zzgqk) zzgwk.zzbr(zza, zzgvcVar, zzgvuVar);
+    }
+
+    public final int zza() {
+        return this.zzc;
+    }
+
+    public final int zzb() {
+        return this.zzd;
+    }
+
+    @Override // com.google.android.gms.internal.ads.zzgwk
+    protected final Object zzdc(zzgwj zzgwjVar, Object obj, Object obj2) {
+        int ordinal = zzgwjVar.ordinal();
+        if (ordinal != 0) {
+            if (ordinal != 2) {
+                if (ordinal != 3) {
+                    if (ordinal != 4) {
+                        if (ordinal != 5) {
+                            if (ordinal == 6) {
+                                zzgyd zzgydVar = zzb;
+                                if (zzgydVar == null) {
+                                    synchronized (zzgqk.class) {
+                                        zzgydVar = zzb;
+                                        if (zzgydVar == null) {
+                                            zzgydVar = new zzgwf(zza);
+                                            zzb = zzgydVar;
+                                        }
+                                    }
+                                }
+                                return zzgydVar;
+                            }
+                            throw null;
+                        }
+                        return zza;
+                    }
+                    return new zzgqi(null);
+                }
+                return new zzgqk();
+            }
+            return zzgwk.zzbQ(zza, "\u0000\u0002\u0000\u0000\u0001\u0002\u0002\u0000\u0000\u0000\u0001\u000b\u0002\u000b", new Object[]{"zzd", "zzc"});
+        }
+        return (byte) 1;
+    }
+}

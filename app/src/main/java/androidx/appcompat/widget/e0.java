@@ -1,0 +1,125 @@
+package androidx.appcompat.widget;
+
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.text.InputFilter;
+import android.util.AttributeSet;
+import android.widget.ToggleButton;
+/* compiled from: AppCompatToggleButton.java */
+/* loaded from: C:\Users\tewan\Downloads\Football Live HD\.\classes.dex */
+public class e0 extends ToggleButton implements androidx.core.view.y {
+
+    /* renamed from: a  reason: collision with root package name */
+    private final e f1561a;
+
+    /* renamed from: b  reason: collision with root package name */
+    private final b0 f1562b;
+
+    /* renamed from: c  reason: collision with root package name */
+    private n f1563c;
+
+    public e0(Context context, AttributeSet attributeSet) {
+        this(context, attributeSet, 16842827);
+    }
+
+    private n getEmojiTextViewHelper() {
+        if (this.f1563c == null) {
+            this.f1563c = new n(this);
+        }
+        return this.f1563c;
+    }
+
+    @Override // android.widget.ToggleButton, android.widget.CompoundButton, android.widget.TextView, android.view.View
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        e eVar = this.f1561a;
+        if (eVar != null) {
+            eVar.b();
+        }
+        b0 b0Var = this.f1562b;
+        if (b0Var != null) {
+            b0Var.b();
+        }
+    }
+
+    @Override // androidx.core.view.y
+    public ColorStateList getSupportBackgroundTintList() {
+        e eVar = this.f1561a;
+        if (eVar != null) {
+            return eVar.c();
+        }
+        return null;
+    }
+
+    @Override // androidx.core.view.y
+    public PorterDuff.Mode getSupportBackgroundTintMode() {
+        e eVar = this.f1561a;
+        if (eVar != null) {
+            return eVar.d();
+        }
+        return null;
+    }
+
+    @Override // android.widget.TextView
+    public void setAllCaps(boolean z10) {
+        super.setAllCaps(z10);
+        getEmojiTextViewHelper().c(z10);
+    }
+
+    @Override // android.widget.ToggleButton, android.view.View
+    public void setBackgroundDrawable(Drawable drawable) {
+        super.setBackgroundDrawable(drawable);
+        e eVar = this.f1561a;
+        if (eVar != null) {
+            eVar.f(drawable);
+        }
+    }
+
+    @Override // android.view.View
+    public void setBackgroundResource(int i10) {
+        super.setBackgroundResource(i10);
+        e eVar = this.f1561a;
+        if (eVar != null) {
+            eVar.g(i10);
+        }
+    }
+
+    public void setEmojiCompatEnabled(boolean z10) {
+        getEmojiTextViewHelper().d(z10);
+    }
+
+    @Override // android.widget.TextView
+    public void setFilters(InputFilter[] inputFilterArr) {
+        super.setFilters(getEmojiTextViewHelper().a(inputFilterArr));
+    }
+
+    @Override // androidx.core.view.y
+    public void setSupportBackgroundTintList(ColorStateList colorStateList) {
+        e eVar = this.f1561a;
+        if (eVar != null) {
+            eVar.i(colorStateList);
+        }
+    }
+
+    @Override // androidx.core.view.y
+    public void setSupportBackgroundTintMode(PorterDuff.Mode mode) {
+        e eVar = this.f1561a;
+        if (eVar != null) {
+            eVar.j(mode);
+        }
+    }
+
+    public e0(Context context, AttributeSet attributeSet, int i10) {
+        super(context, attributeSet, i10);
+        u0.a(this, getContext());
+        e eVar = new e(this);
+        this.f1561a = eVar;
+        eVar.e(attributeSet, i10);
+        b0 b0Var = new b0(this);
+        this.f1562b = b0Var;
+        b0Var.m(attributeSet, i10);
+        getEmojiTextViewHelper().b(attributeSet, i10);
+    }
+}
