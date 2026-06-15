@@ -7,3 +7,4 @@ Update rules.md
 
 Remove the ad system.
 เอาระบบโฆษณาออก
+- *Language Coaching: คำว่า "เอาระบบโฆษณาออก" แปลเป็นภาษาอังกฤษตรงตัวคือ "Remove the ad system." หรือเพื่อความชัดเจนขึ้นอาจใช้ "Please remove the entire advertisement system from the app." คำศัพท์ที่มีประโยชน์: 'Bypass' (ข้าม), 'Ad mediation' (ระบบจัดการโฆษณา), 'Initialize' (เริ่มต้นระบบ)*
