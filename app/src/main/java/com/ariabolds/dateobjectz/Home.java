@@ -178,24 +178,7 @@ public class Home extends AppCompatActivity {
                 if (Home.this.getSupportActionBar() != null) {
                     Home.this.getSupportActionBar().x();
                 }
-                try {
-                    if (Home.this.f10177j.getString("adsNetwork", "").equals(AdColonyAppOptions.IRONSOURCE) && IronSource.isInterstitialReady()) {
-                        IronSource.showInterstitial();
-                        Home.this.f10175h.setVisibility(8);
-                    } else if (Home.this.f10177j.getString("adsNetwork", "AppLovin").equals("AppLovin") && Home.f10167z.isReady()) {
-                        Home.f10167z.showAd();
-                        Home.this.f10175h.setVisibility(8);
-                    } else {
-                        Interstitial interstitial = Home.f10166y;
-                        if (interstitial != null && interstitial.isAdLoaded()) {
-                            Home.f10166y.showAd();
-                            Home.this.f10175h.setVisibility(8);
-                        } else if (Home.this.f10189v.isReady()) {
-                            Home.this.f10189v.showAd();
-                        }
-                    }
-                } catch (Exception unused) {
-                }
+                // Ads removed
             }
         }
     }
@@ -820,50 +803,7 @@ public class Home extends AppCompatActivity {
                 intent2.putExtra("url", aVar.c());
                 Home.this.startActivity(intent2);
             }
-            try {
-                if (Home.this.f10177j.getString("adsNetwork", "").equals(AdColonyAppOptions.IRONSOURCE)) {
-                    if (IronSource.isInterstitialReady()) {
-                        if (com.ariabolds.dateobjectz.b.a().b() <= 1) {
-                            IronSource.showInterstitial();
-                            com.ariabolds.dateobjectz.b.a().c(Home.this.f10177j.getInt("interstital_ad_click", 1));
-                            return;
-                        }
-                    } else if (!IronSource.isInterstitialReady()) {
-                        IronSource.loadInterstitial();
-                    }
-                }
-                if (Home.this.f10177j.getString("adsNetwork", "").equals("AppLovin")) {
-                    if (Home.f10167z.isReady()) {
-                        if (com.ariabolds.dateobjectz.b.a().b() <= 1) {
-                            Home.f10167z.showAd();
-                            com.ariabolds.dateobjectz.b.a().c(Home.this.f10177j.getInt("interstital_ad_click", 1));
-                            return;
-                        }
-                    } else if (!Home.f10167z.isReady()) {
-                        Home.f10167z.loadAd();
-                    }
-                }
-                if (Home.f10166y.isAdLoaded()) {
-                    if (com.ariabolds.dateobjectz.b.a().b() <= 1) {
-                        Home.f10166y.showAd();
-                        com.ariabolds.dateobjectz.b.a().c(Home.this.f10177j.getInt("interstital_ad_click", 1));
-                        return;
-                    }
-                    com.ariabolds.dateobjectz.b.a().c(com.ariabolds.dateobjectz.b.a().b() - 1);
-                    return;
-                }
-                Interstitial interstitial = Home.f10166y;
-                if (interstitial != null && !interstitial.isAdLoaded()) {
-                    Home.f10166y.loadAd();
-                }
-                if (Home.this.f10189v.isReady() && com.ariabolds.dateobjectz.b.a().b() <= 1) {
-                    Home.this.f10189v.showAd();
-                    com.ariabolds.dateobjectz.b.a().c(Home.this.f10177j.getInt("interstital_ad_click", 1));
-                    return;
-                }
-                com.ariabolds.dateobjectz.b.a().c(com.ariabolds.dateobjectz.b.a().b() - 1);
-            } catch (Exception unused) {
-            }
+            // Ads removed
         }
     }
 
@@ -904,70 +844,13 @@ public class Home extends AppCompatActivity {
     }
 
     void f() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            try {
-                if (this.f10177j.getString("interstital_ad", "false").equals("false")) {
-                    return;
-                }
-            } catch (Exception unused) {
-            }
-        }
-        if (Build.VERSION.SDK_INT < 26) {
-            try {
-                if (this.f10177j.getString("interstital_ad", "false").equals("false")) {
-                    return;
-                }
-            } catch (Exception unused2) {
-            }
-        }
-        if (this.f10177j.getString("interstital_ad", "false").equals("false")) {
-            return;
-        }
-        if (this.f10177j.getString("startapp", "").equals(com.ironsource.mediationsdk.metadata.a.f18924g)) {
-            if (this.f10177j.getString("startapp_video", "").equals(com.ironsource.mediationsdk.metadata.a.f18924g)) {
-                this.f10189v.loadAd(StartAppAd.AdMode.VIDEO);
-            } else {
-                this.f10189v.loadAd();
-            }
-        }
-        if (this.f10177j.getString("adsNetwork", "").equals(AdColonyAppOptions.IRONSOURCE)) {
-            IronSource.setLevelPlayInterstitialListener(new o());
-            IronSource.loadInterstitial();
-            new com.ariabolds.dateobjectz.a(this.f10188u, this);
-        }
-        if (this.f10177j.getString("adsNetwork", "").equals("AppLovin")) {
-            MaxInterstitialAd maxInterstitialAd = new MaxInterstitialAd(this.f10177j.getString("fanInterstital", ""), this);
-            f10167z = maxInterstitialAd;
-            maxInterstitialAd.setListener(new p());
-            f10167z.loadAd();
-            this.f10188u.removeAllViews();
-            MaxAdView maxAdView = new MaxAdView(this.f10177j.getString("fanBanner", ""), this);
-            maxAdView.setListener(new q(maxAdView));
-            int dpToPx = AppLovinSdkUtils.dpToPx(this, MaxAdFormat.BANNER.getAdaptiveSize(this).getHeight());
-            maxAdView.setLayoutParams(new FrameLayout.LayoutParams(-1, dpToPx));
-            maxAdView.setExtraParameter("adaptive_banner", com.ironsource.mediationsdk.metadata.a.f18924g);
-            maxAdView.setLayoutParams(new FrameLayout.LayoutParams(-1, dpToPx));
-            maxAdView.setBackgroundColor(0);
-            this.f10188u.addView(maxAdView);
-            maxAdView.loadAd();
-        }
+        // Ad Initialization Removed
+
     }
 
     public void h() {
-        Interstitial interstitial = f10166y;
-        if (interstitial == null || !interstitial.isAdLoaded()) {
-            Interstitial interstitial2 = new Interstitial(this, this.f10177j.getString("appNext", "000000000000"));
-            f10166y = interstitial2;
-            interstitial2.setAutoPlay(true);
-            f10166y.setMute(true);
-            f10166y.setBackButtonCanClose(false);
-            f10166y.setOnAdLoadedCallback(new f());
-            f10166y.setOnAdOpenedCallback(new g());
-            f10166y.setOnAdClickedCallback(new h());
-            f10166y.setOnAdClosedCallback(new i());
-            f10166y.setOnAdErrorCallback(new k());
-            f10166y.loadAd();
-        }
+        // AppNext Initialization Removed
+
     }
 
     public void i(Context context) {
@@ -1143,31 +1026,7 @@ public class Home extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 33 && androidx.core.content.a.a(this, "android.permission.POST_NOTIFICATIONS") == -1) {
             androidx.core.app.b.r(this, new String[]{"android.permission.POST_NOTIFICATIONS"}, 101);
         }
-        Appnext.init(getApplicationContext());
-        this.f10177j = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        StartAppSDK.setUserConsent(this, "pas", System.currentTimeMillis(), true);
-        StartAppSDK.getExtras(this).edit().putString("IABUSPrivacy_String", "1YNN").apply();
-        StartAppSDK.init((Context) this, "203473016", false);
-        this.f10189v = new StartAppAd(this);
-        AppLovinSdk.getInstance(this).setMediationProvider(AppLovinMediationProvider.MAX);
-        AudienceNetworkAds.initialize(getApplicationContext());
-        Appnext.init(getApplicationContext());
-        try {
-            getWindow().getDecorView().setSystemUiVisibility(4102);
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().k();
-            }
-        } catch (Exception unused) {
-        }
-        AppLovinPrivacySettings.setHasUserConsent(true, getApplicationContext());
-        AppLovinSdk.initializeSdk(this, new j());
-        IronSource.setConsent(true);
-        IronSource.setMetaData("AdMob_TFCD", "false");
-        IronSource.setMetaData("AdMob_TFUA", com.ironsource.mediationsdk.metadata.a.f18924g);
-        IronSource.setMetaData("AppLovin_AgeRestrictedUser", com.ironsource.mediationsdk.metadata.a.f18924g);
-        IronSource.setMetaData("UnityAds_coppa", "false");
-        IronSource.setAdaptersDebug(true);
-        IronSource.init(this, this.f10177j.getString("is_id", ""), new l());
+        // Ads Initialization Removed
         if (Build.VERSION.SDK_INT >= 26) {
             try {
                 this.f10177j = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

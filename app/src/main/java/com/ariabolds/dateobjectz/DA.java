@@ -602,180 +602,36 @@ public class DA extends AppCompatActivity {
             return;
         }
         try {
-            if (this.f10082h.getString("adsNetwork", "").equals(AdColonyAppOptions.IRONSOURCE)) {
-                if (IronSource.isInterstitialReady()) {
-                    if (com.ariabolds.dateobjectz.b.a().b() <= 1) {
-                        IronSource.showInterstitial();
-                        com.ariabolds.dateobjectz.b.a().c(this.f10082h.getInt("interstital_ad_click", 1));
-                        return;
-                    }
-                    com.ariabolds.dateobjectz.b.a().c(com.ariabolds.dateobjectz.b.a().b() - 1);
-                } else {
-                    IronSource.loadInterstitial();
-                }
-            }
-            if (this.f10082h.getString("adsNetwork", "").equals("AppLovin")) {
-                if (Home.f10167z.isReady()) {
-                    if (com.ariabolds.dateobjectz.b.a().b() <= 1) {
-                        Home.f10167z.showAd();
-                        com.ariabolds.dateobjectz.b.a().c(this.f10082h.getInt("interstital_ad_click", 1));
-                        return;
-                    }
-                    com.ariabolds.dateobjectz.b.a().c(com.ariabolds.dateobjectz.b.a().b() - 1);
-                } else {
-                    Home.f10167z.loadAd();
-                }
-            }
             if (this.f10084j.f().equals("embed")) {
-                if (Home.f10166y.isAdLoaded()) {
-                    if (com.ariabolds.dateobjectz.b.a().b() <= 1) {
-                        Intent intent = new Intent(getApplicationContext(), WP.class);
-                        intent.putExtra("url", this.f10084j.g());
-                        intent.putExtra(ug.f21009x, this.f10084j.c());
-                        intent.putExtra(b9.h.Z, this.f10084j.m());
-                        intent.putExtra(cc.f16874p, this.f10084j.n());
-                        intent.putExtra("agent", this.f10084j.a());
-                        intent.putExtra("channel_type", this.f10084j.f());
-                        intent.putExtra("eh1", this.f10084j.i());
-                        intent.putExtra("eh2", this.f10084j.j());
-                        intent.putExtra("cUrl", this.f10084j.p());
-                        startActivity(intent);
-                        Home.f10166y.showAd();
-                        com.ariabolds.dateobjectz.b.a().c(this.f10082h.getInt("interstital_ad_click", 1));
-                        return;
-                    }
-                    com.ariabolds.dateobjectz.b.a().c(com.ariabolds.dateobjectz.b.a().b() - 1);
-                    Intent intent2 = new Intent(getApplicationContext(), WP.class);
-                    intent2.putExtra("url", this.f10084j.g());
-                    intent2.putExtra(ug.f21009x, this.f10084j.c());
-                    intent2.putExtra(b9.h.Z, this.f10084j.m());
-                    intent2.putExtra(cc.f16874p, this.f10084j.n());
-                    intent2.putExtra("agent", this.f10084j.a());
-                    intent2.putExtra("channel_type", this.f10084j.f());
-                    intent2.putExtra("eh1", this.f10084j.i());
-                    intent2.putExtra("eh2", this.f10084j.j());
-                    intent2.putExtra("cUrl", this.f10084j.p());
-                    intent2.putExtra("bandwith", this.f10084j.b());
-                    startActivity(intent2);
-                    return;
-                }
-                Home.f10166y.loadAd();
-                if (this.f10091q.isReady()) {
-                    if (com.ariabolds.dateobjectz.b.a().b() <= 1) {
-                        this.f10091q.showAd();
-                        com.ariabolds.dateobjectz.b.a().c(this.f10082h.getInt("interstital_ad_click", 1));
-                    } else {
-                        com.ariabolds.dateobjectz.b.a().c(com.ariabolds.dateobjectz.b.a().b() - 1);
-                    }
-                    Intent intent3 = new Intent(getApplicationContext(), WP.class);
-                    intent3.putExtra("url", this.f10084j.g());
-                    intent3.putExtra(ug.f21009x, this.f10084j.c());
-                    intent3.putExtra(b9.h.Z, this.f10084j.m());
-                    intent3.putExtra(cc.f16874p, this.f10084j.n());
-                    intent3.putExtra("agent", this.f10084j.a());
-                    intent3.putExtra("channel_type", this.f10084j.f());
-                    intent3.putExtra("eh1", this.f10084j.i());
-                    intent3.putExtra("eh2", this.f10084j.j());
-                    intent3.putExtra("cUrl", this.f10084j.p());
-                    intent3.putExtra("bandwith", this.f10084j.b());
-                    startActivity(intent3);
-                    return;
-                }
-                com.ariabolds.dateobjectz.b.a().c(com.ariabolds.dateobjectz.b.a().b() - 1);
-                Intent intent4 = new Intent(getApplicationContext(), WP.class);
-                intent4.putExtra("url", this.f10084j.g());
-                intent4.putExtra(ug.f21009x, this.f10084j.c());
-                intent4.putExtra(b9.h.Z, this.f10084j.m());
-                intent4.putExtra(cc.f16874p, this.f10084j.n());
-                intent4.putExtra("agent", this.f10084j.a());
-                intent4.putExtra("channel_type", this.f10084j.f());
-                intent4.putExtra("eh1", this.f10084j.i());
-                intent4.putExtra("eh2", this.f10084j.j());
-                intent4.putExtra("cUrl", this.f10084j.p());
-                startActivity(intent4);
-            } else if (Home.f10166y.isAdLoaded()) {
-                if (com.ariabolds.dateobjectz.b.a().b() <= 1) {
-                    Intent intent5 = new Intent(getApplicationContext(), EP.class);
-                    intent5.putExtra("url", this.f10084j.g());
-                    intent5.putExtra("curl", this.f10084j.p());
-                    intent5.putExtra(ug.f21009x, this.f10084j.c());
-                    intent5.putExtra(b9.h.Z, this.f10084j.m());
-                    intent5.putExtra(cc.f16874p, this.f10084j.n());
-                    intent5.putExtra("agent", this.f10084j.a());
-                    intent5.putExtra("channel_type", this.f10084j.f());
-                    intent5.putExtra("eh1", this.f10084j.i());
-                    intent5.putExtra("eh2", this.f10084j.j());
-                    intent5.putExtra("cUrl", this.f10084j.p());
-                    intent5.putExtra("bandwith", this.f10084j.b());
-                    intent5.putExtra("name", this.f10084j.e());
-                    intent5.putExtra("drm", this.f10084j.h());
-                    startActivity(intent5);
-                    Home.f10166y.showAd();
-                    com.ariabolds.dateobjectz.b.a().c(this.f10082h.getInt("interstital_ad_click", 1));
-                    return;
-                }
-                Intent intent6 = new Intent(getApplicationContext(), EP.class);
-                intent6.putExtra("url", this.f10084j.g());
-                intent6.putExtra("curl", this.f10084j.p());
-                intent6.putExtra(ug.f21009x, this.f10084j.c());
-                intent6.putExtra(b9.h.Z, this.f10084j.m());
-                intent6.putExtra(cc.f16874p, this.f10084j.n());
-                intent6.putExtra("agent", this.f10084j.a());
-                intent6.putExtra("channel_type", this.f10084j.f());
-                intent6.putExtra("eh1", this.f10084j.i());
-                intent6.putExtra("eh2", this.f10084j.j());
-                intent6.putExtra("cUrl", this.f10084j.p());
-                intent6.putExtra("bandwith", this.f10084j.b());
-                intent6.putExtra("name", this.f10084j.e());
-                intent6.putExtra("drm", this.f10084j.h());
-                startActivity(intent6);
-                com.ariabolds.dateobjectz.b.a().c(com.ariabolds.dateobjectz.b.a().b() - 1);
+                Intent intent = new Intent(this, WP.class);
+                intent.putExtra("url", this.f10084j.g());
+                intent.putExtra(ug.f21009x, this.f10084j.c());
+                intent.putExtra(b9.h.Z, this.f10084j.m());
+                intent.putExtra(cc.f16874p, this.f10084j.n());
+                intent.putExtra("agent", this.f10084j.a());
+                intent.putExtra("channel_type", this.f10084j.f());
+                intent.putExtra("eh1", this.f10084j.i());
+                intent.putExtra("eh2", this.f10084j.j());
+                intent.putExtra("cUrl", this.f10084j.p());
+                this.startActivity(intent);
             } else {
-                Home.f10166y.loadAd();
-                if (this.f10091q.isReady()) {
-                    if (com.ariabolds.dateobjectz.b.a().b() <= 1) {
-                        this.f10091q.showAd();
-                        str = "bandwith";
-                        com.ariabolds.dateobjectz.b.a().c(this.f10082h.getInt("interstital_ad_click", 1));
-                    } else {
-                        str = "bandwith";
-                        com.ariabolds.dateobjectz.b.a().c(com.ariabolds.dateobjectz.b.a().b() - 1);
-                    }
-                    Intent intent7 = new Intent(getApplicationContext(), EP.class);
-                    intent7.putExtra("url", this.f10084j.g());
-                    intent7.putExtra("curl", this.f10084j.p());
-                    intent7.putExtra(ug.f21009x, this.f10084j.c());
-                    intent7.putExtra(b9.h.Z, this.f10084j.m());
-                    intent7.putExtra(cc.f16874p, this.f10084j.n());
-                    intent7.putExtra("agent", this.f10084j.a());
-                    intent7.putExtra("channel_type", this.f10084j.f());
-                    intent7.putExtra("eh1", this.f10084j.i());
-                    intent7.putExtra("eh2", this.f10084j.j());
-                    intent7.putExtra("cUrl", this.f10084j.p());
-                    intent7.putExtra(str, this.f10084j.b());
-                    intent7.putExtra("name", this.f10084j.e());
-                    intent7.putExtra("drm", this.f10084j.h());
-                    startActivity(intent7);
-                    return;
-                }
-                com.ariabolds.dateobjectz.b.a().c(com.ariabolds.dateobjectz.b.a().b() - 1);
-                Intent intent8 = new Intent(getApplicationContext(), EP.class);
-                intent8.putExtra("url", this.f10084j.g());
-                intent8.putExtra("curl", this.f10084j.p());
-                intent8.putExtra(ug.f21009x, this.f10084j.c());
-                intent8.putExtra(b9.h.Z, this.f10084j.m());
-                intent8.putExtra(cc.f16874p, this.f10084j.n());
-                intent8.putExtra("agent", this.f10084j.a());
-                intent8.putExtra("channel_type", this.f10084j.f());
-                intent8.putExtra("eh1", this.f10084j.i());
-                intent8.putExtra("eh2", this.f10084j.j());
-                intent8.putExtra("cUrl", this.f10084j.p());
-                intent8.putExtra("bandwith", this.f10084j.b());
-                intent8.putExtra("name", this.f10084j.e());
-                intent8.putExtra("drm", this.f10084j.h());
-                startActivity(intent8);
+                Intent intent2 = new Intent(this.getApplicationContext(), EP.class);
+                intent2.putExtra("url", this.f10084j.g());
+                intent2.putExtra("curl", this.f10084j.p());
+                intent2.putExtra(ug.f21009x, this.f10084j.c());
+                intent2.putExtra(b9.h.Z, this.f10084j.m());
+                intent2.putExtra(cc.f16874p, this.f10084j.n());
+                intent2.putExtra("agent", this.f10084j.a());
+                intent2.putExtra("channel_type", this.f10084j.f());
+                intent2.putExtra("eh1", this.f10084j.i());
+                intent2.putExtra("eh2", this.f10084j.j());
+                intent2.putExtra("cUrl", this.f10084j.p());
+                intent2.putExtra("bandwith", this.f10084j.b());
+                intent2.putExtra("name", this.f10084j.e());
+                intent2.putExtra("drm", this.f10084j.h());
+                this.startActivity(intent2);
             }
-        } catch (Exception unused3) {
+        } catch (Exception unused) {
         }
     }
 
@@ -883,15 +739,7 @@ public class DA extends AppCompatActivity {
             }
         }
         this.f10092r = 0;
-        StartAppSDK.setUserConsent(this, "pas", System.currentTimeMillis(), true);
-        this.f10091q = new StartAppAd(this);
-        if (this.f10082h.getString("startapp", "").equals(com.ironsource.mediationsdk.metadata.a.f18924g)) {
-            if (this.f10082h.getString("startapp_video", "").equals(com.ironsource.mediationsdk.metadata.a.f18924g)) {
-                this.f10091q.loadAd(StartAppAd.AdMode.VIDEO);
-            } else {
-                this.f10091q.loadAd();
-            }
-        }
+
         Intent intent = getIntent();
         if (intent != null) {
             this.f10079e = intent.getStringExtra("cid");
@@ -911,30 +759,7 @@ public class DA extends AppCompatActivity {
             }
         } catch (Exception unused3) {
         }
-        try {
-            if (this.f10082h.getString("interstital_ad", com.ironsource.mediationsdk.metadata.a.f18924g).equals(com.ironsource.mediationsdk.metadata.a.f18924g)) {
-                if (this.f10082h.getString("adsNetwork", "").equals(AdColonyAppOptions.IRONSOURCE)) {
-                    IronSource.setLevelPlayInterstitialListener(new d());
-                    IronSource.loadInterstitial();
-                    new com.ariabolds.dateobjectz.a(this.f10089o, this);
-                }
-                if (this.f10082h.getString("adsNetwork", "").equals("AppLovin")) {
-                    Home.f10167z.setListener(new e());
-                    Home.f10167z.loadAd();
-                    this.f10089o.removeAllViews();
-                    MaxAdView maxAdView = new MaxAdView(this.f10082h.getString("fanBanner", ""), this);
-                    maxAdView.setListener(new f(maxAdView));
-                    int dpToPx = AppLovinSdkUtils.dpToPx(this, MaxAdFormat.BANNER.getAdaptiveSize(this).getHeight());
-                    maxAdView.setLayoutParams(new FrameLayout.LayoutParams(-1, dpToPx));
-                    maxAdView.setExtraParameter("adaptive_banner", com.ironsource.mediationsdk.metadata.a.f18924g);
-                    maxAdView.setLayoutParams(new FrameLayout.LayoutParams(-1, dpToPx));
-                    maxAdView.setBackgroundColor(0);
-                    this.f10089o.addView(maxAdView);
-                    maxAdView.loadAd();
-                }
-            }
-        } catch (Exception unused4) {
-        }
+        // Ad banners removed
         try {
             if (this.f10082h.getString("u1", "").isEmpty()) {
                 return;

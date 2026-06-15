@@ -809,11 +809,7 @@ public class EP extends AppCompatActivity {
         new r1.a(applicationContext, com.ariabolds.dateobjectz.c.f10244b + com.ariabolds.dateobjectz.c.f10243a + "retry.js?id=" + this.f10115e + "&code=" + str, new h()).execute(new Void[0]);
     }
 
-    /* JADX INFO: Access modifiers changed from: private */
-    public void u() {
-        if (this.f10136z.getString("adsNetwork", "").equals("AppLovin")) {
-            this.C.loadAd();
-        }
+    private void u() {
     }
 
     public l.a l(z4.s sVar) {
@@ -896,9 +892,7 @@ public class EP extends AppCompatActivity {
         }
         setContentView(2131558428);
         this.f10136z = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        MaxInterstitialAd maxInterstitialAd = new MaxInterstitialAd(this.f10136z.getString("fanInterstital1", ""), this);
-        this.C = maxInterstitialAd;
-        maxInterstitialAd.setListener(new b());
+        // Ads removed
         this.f10134x = (TextView) findViewById(2131362204);
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
         alphaAnimation.setDuration(300L);
@@ -1015,14 +1009,13 @@ public class EP extends AppCompatActivity {
 
     /* JADX INFO: Access modifiers changed from: protected */
     @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         if (!this.B) {
             LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(this.H);
             this.f10128r.stop();
             this.f10128r.I();
             finish();
-            this.C.destroy();
             return;
         }
         this.f10128r.pause();
