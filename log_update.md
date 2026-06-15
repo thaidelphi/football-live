@@ -16,3 +16,6 @@
 - **ตรวจสอบสภาพแวดล้อมระบบ**: ตรวจพบ **Java (JDK)** รันคำสั่งสำหรับการใช้งาน Apktool และเตรียมสกัดไฟล์ APK
 - **Decompile และลบโฆษณาด้วย Apktool**: ดำเนินการแยกไฟล์ APK ด้วย Apktool และแก้ไขโค้ดโฆษณาในระดับ Smali ของคลาส `MyApplication`, `Home`, `DA`, และ `EP` เพื่อให้การแสดงผลข้ามโฆษณาทั้งหมด (Bypass Ads)
 - **สร้างไฟล์ APK ที่แก้ไขแล้ว**: ทำการ Build กลับเป็นไฟล์ APK ใหม่ และ Sign ด้วย Key เพื่อให้สามารถติดตั้งลงเครื่องได้สำเร็จ ไฟล์ที่ได้คือ `Football_Live_HD_BypassAds.apk`
+- **เพิ่มระบบ Popup เมื่อเข้าแอปครั้งแรก**: แก้ไข `Home.smali` เพื่อเพิ่มลอจิกเช็คการเข้าแอปครั้งแรกด้วย `SharedPreferences` และแสดง `AlertDialog` ข้อความ "Football-Iive HD Modified by tewan.ko" พร้อมปุ่ม Accept 
+- **แก้ไข Package Name เพื่อลดการขัดแย้ง**: ดำเนินการแก้ไข `AndroidManifest.xml` เปลี่ยน Package Name จาก `com.ariabolds.dateobjectz` เป็น `com.ariabolds.dateobjectzmod` และอัปเดต Authorities ต่างๆ ของ Providers ให้สอดคล้องกัน เพื่อให้สามารถติดตั้งควบคู่กับแอปต้นฉบับได้ 
+- **Build APK เวอร์ชั่น 2 (v2)**: ทำการคอมไพล์กลับและ Sign ออกมาเป็น `Football_Live_HD_BypassAds_v2.apk` ส่งมอบเรียบร้อย
